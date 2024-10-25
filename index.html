@@ -3,23 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Webpage</title>
+    <title>Breast Cancer Awareness</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#symptoms">Symptoms</a></li>
+            <li><a href="#myths">Myths & Facts</a></li>
+            <li><a href="#survivor-story">Survivor Story</a></li>
+            <li><a href="#did-you-know">Did You Know?</a></li>
+            <li><a href="#donate">Donate</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Section -->
     <header>
-        <h1>Welcome to My Simple Webpage</h1>
+        <img src="https://img.freepik.com/premium-vector/isolated-pink-ribbon-vector-icon-versatile-design-breast-cancer-campaigns_1105246-1546.jpg?semt=ais_hybrid" alt="Breast Cancer Awareness">
+        <h1>Breast Cancer Awareness</h1>
+        <p>Empowering Lives, Spreading Awareness</p>
     </header>
 
+    <!-- Main Content Sections -->
     <main>
-        <p id="message">Click the button to change this text.</p>
-        <button id="changeTextButton">Change Text</button>
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Breast Cancer</h2>
+            <p>Breast cancer affects millions worldwide, and awareness can lead to early detection, better treatment, and improved survival rates. Learn about the symptoms, risks, and steps you can take to protect yourself and loved ones.</p>
+        </section>
+
+        <!-- Symptoms Section -->
+        <section id="symptoms">
+            <h2>Recognizing Symptoms</h2>
+            <ul>
+                <li><img src="https://my.clevelandclinic.org/-/scassets/Images/org/health/articles/3986-breast-cancer" alt="Lump in the Breast">Lump in the breast</li>
+                <li><img src="https://images.app.goo.gl/eTUF77YhsjwhfzWD6" alt="Change in Shape or Size">Changes in the shape or size of the breast</li>
+                <li><img src="https://www.scitcentral.com/images/figure_139.png" alt="Skin Dimpling">Skin dimpling or texture change</li>
+                <li><img src="https://images.app.goo.gl/jP7yxatDEE9Ptzec6" alt="Nipple Retraction">Nipple retraction or inversion</li>
+                <li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9jO8E4aXmN0q01Gtz2xKe5UssKiwsLOL14g&s" alt="Discharge">Discharge from the nipple</li>
+            </ul>
+        </section>
+
+        <!-- Myths & Facts Section -->
+        <section id="myths">
+            <h2>Common Myths and Facts</h2>
+            <ul>
+                <li>Myth: Only women get breast cancer. <br> Fact: Men can also get breast cancer, although it is less common.</li>
+                <li>Myth: Finding a lump means you have cancer. <br> Fact: Not all lumps are cancerous, but they should be checked by a doctor.</li>
+                <li>Myth: Breast cancer only affects older people. <br> Fact: While risk increases with age, younger individuals can also be diagnosed.</li>
+            </ul>
+        </section>
+
+        <!-- Survivor Story Section -->
+        <section id="survivor-story">
+            <h2>Survivor Story</h2>
+            <img src="https://cdn.cancer.ca/-/media/images/about-us/hubs/stories/2020/4-breast-cancer-survivors-open-up-about-their-personal-experiences/2020-bcam-blog-sharon-500x333.png?h=333&iar=0&mw=543&w=500&rev=6b2af6a133c340d8af7e90b42f1d5a62&hash=85E6B803D670C0F69946D57CFF04E5A8" alt="Survivor Story">
+            <p>At age 24, Kimberley found a lump and was diagnosed with breast cancer. Despite her fears, she underwent treatment and is now cancer-free. Kimberley shares her story to raise awareness about breast cancer in young people.</p>
+        </section>
+
+        <!-- Did You Know Section -->
+        <section id="did-you-know">
+            <h2>Did You Know?</h2>
+            <p id="fact-rotator">Breast cancer is the most common cancer among women worldwide.</p>
+        </section>
+
+        <!-- Donation Section -->
+        <section id="donate">
+            <h2>Support Us</h2>
+            <p>Your support makes a difference. Donations help fund awareness programs and provide resources. Thank you for helping us make an impact.</p>
+            <div class="donation-options">
+                <div class="donation-method">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/GTBank_logo.svg/1200px-GTBank_logo.svg.png" alt="GT Bank">
+                    <p>Account Number: 2032202001590</p>
+                </div>
+                <div class="donation-method">
+                    <img src="https://samajobs.com/wp-content/uploads/2022/01/wave.png" alt="Wave Mobile Money">
+                    <p>Mobile Number: +220 3709558</p>
+                </div>
+            </div>
+            <button class="donate-button">Donate Now</button>
+        </section>
     </main>
 
+    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 My Simple Webpage</p>
+        <p>&copy; 2024 Breast Cancer Awareness Initiative</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
