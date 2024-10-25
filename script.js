@@ -1,26 +1,26 @@
+// Array of facts about breast cancer
 const facts = [
     "Breast cancer is the most common cancer among women worldwide.",
-    "Men can also get breast cancer.",
-    "1 in 8 women will be diagnosed with breast cancer in her lifetime.",
-    "Regular screenings improve early detection.",
+    "Early detection can significantly improve survival rates.",
+    "Breast cancer can also occur in men, although it is rare.",
+    "A healthy lifestyle can help reduce the risk of breast cancer.",
+    "Genetics play a significant role in breast cancer risk.",
+    "Regular mammograms can help detect breast cancer early.",
+    "Breastfeeding may lower the risk of breast cancer."
 ];
 
+// Function to rotate through facts
+let currentIndex = 0;
 function rotateFacts() {
-    const factElement = document.getElementById("fact-rotator");
-    let index = 0;
-
-    setInterval(() => {
-        factElement.textContent = facts[index];
-        index = (index + 1) % facts.length;
-    }, 5000);
+    document.getElementById("fact-rotator").textContent = facts[currentIndex];
+    currentIndex = (currentIndex + 1) % facts.length;
 }
 
+// Donation prompt function
 function promptDonation() {
-    alert("Thank you for considering a donation! Support us via GT Bank (2032202001590) or Wave Mobile Money (+220 3709558).");
+    alert("Thank you for considering a donation! Please choose your preferred method:\n\nGT Bank: Account Number 2032202001590\nWave Mobile Money: Mobile Number +220 3709558");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    rotateFacts();
-    const donateButton = document.querySelector(".donate-button");
-    donateButton.addEventListener("click", promptDonation);
-});
+// Event Listeners
+document.querySelector('.donate-button').addEventListener('click', promptDonation);
+window.onload = setInterval(rotateFacts, 5000); // Rotate facts every 5 seconds
