@@ -3,326 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Breast Cancer Awareness & Education</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        .navbar {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .nav-links a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        .hero {
-            background: url('https://images.unsplash.com/photo-1602238121857-540d64e8af28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc0M3wwfDF8c2VhcmNofDN8fGdyYXltZW50fGVufDB8fHx8MTYyNTg3MDU3Mw&ixlib=rb-1.2.1&q=80&w=1080') center/cover no-repeat;
-            height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-
-        .cta-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .section {
-            padding: 40px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .info-grid {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .info-card {
-            flex: 1;
-            padding: 20px;
-            margin: 0 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 40px 0;
-        }
-
-        .stat-box {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .symptoms-image {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .donation-methods {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-
-        .donation-option {
-            text-align: center;
-        }
-
-        .donation-logo {
-            width: 100px;
-            height: auto;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #f8f9fa;
-        }
-    </style>
+    <title>Introduction to Number and Numeration</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#symptoms">Symptoms</a>
-            <a href="#prevention">Prevention</a>
-            <a href="#support">Support</a>
-            <a href="#facts">Mind-Blowing Facts</a>
-            <a href="#myths">Myths</a>
-            <a href="#did-you-know">Did You Know?</a>
-        </div>
-    </nav>
 
-    <section class="hero" id="home">
-        <div class="floating-ribbons" id="ribbons"></div>
-        <div class="hero-content">
-            <h1>Together Against Breast Cancer</h1>
-            <p>Join us in the fight against breast cancer. Early detection saves lives. Learn about prevention, support, and treatment options.</p>
-            <button class="cta-button">Get Involved Today</button>
-        </div>
+    <!-- Video Lecture Section -->
+    <section id="lecture">
+        <h1>Video Lecture: Introduction to Number and Numeration - Natural Numbers, Fractions, and Decimals</h1>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/T1oDHkpNKok?si=h_tbdBBOI9PInq9w" 
+                title="YouTube video player" frameborder="0" allowfullscreen></iframe>
     </section>
 
-    <div class="stats-container">
-        <div class="stat-box">
-            <div class="stat-number" data-target="1">0</div>
-            <div class="stat-label">in 8 women will develop breast cancer in their lifetime</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-number" data-target="90">0</div>
-            <div class="stat-label">% survival rate when detected early</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-number" data-target="3">0</div>
-            <div class="stat-label">million breast cancer survivors in the US</div>
-        </div>
-    </div>
-
-    <section class="section" id="about">
-        <div class="container">
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>What is Breast Cancer?</h3>
-                    <p>Breast cancer occurs when cells in the breast grow out of control. These cells usually form a tumor that can often be seen on an x-ray or felt as a lump. The tumor is malignant (cancerous) if the cells can grow into surrounding tissues or spread to distant areas of the body.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Early Detection</h3>
-                    <p>Early detection of breast cancer is crucial for successful treatment. Regular screenings, including mammograms and clinical breast exams, can help detect cancer in its early stages when it's most treatable. Women aged 40 and older should have mammograms every 1-2 years.</p>
-                </div>
+    <!-- Quiz Section -->
+    <section id="quiz">
+        <h2>Quiz: Natural Numbers, Fractions, and Decimals</h2>
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. What is a natural number?</p>
+                <input type="radio" name="q1" value="A"> A. Any number that can be negative.<br>
+                <input type="radio" name="q1" value="B"> B. A positive whole number including zero.<br>
+                <input type="radio" name="q1" value="C"> C. A positive whole number excluding zero.<br>
+                <span class="feedback" id="feedback1"></span>
             </div>
-        </div>
-    </section>
 
-    <section class="section" id="symptoms">
-        <div class="container">
-            <div class="info-card">
-                <h3>Common Signs and Symptoms</h3>
-                <img src="https://images.app.goo.gl/khcuHjbnjzMBv6ag8" alt="Breast Cancer Symptoms" class="symptoms-image">
-                <ul class="symptoms-list">
-                    <li>New lump in the breast or underarm</li>
-                    <li>Thickening or swelling of part of the breast</li>
-                    <li>Irritation or dimpling of breast skin</li>
-                    <li>Redness or flaky skin in the nipple area</li>
-                    <li>Pulling in of the nipple</li>
-                    <li>Nipple discharge other than breast milk</li>
-                    <li>Any change in the size or shape of the breast</li>
-                    <li>Pain in any area of the breast</li>
-                </ul>
+            <div class="quiz-question">
+                <p>2. Which of the following is an example of a fraction?</p>
+                <input type="radio" name="q2" value="A"> A. 3<br>
+                <input type="radio" name="q2" value="B"> B. 5/7<br>
+                <input type="radio" name="q2" value="C"> C. 0.9<br>
+                <span class="feedback" id="feedback2"></span>
             </div>
-        </div>
-    </section>
 
-    <section class="section" id="prevention">
-        <div class="container">
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Risk Reduction</h3>
-                    <p>While some risk factors cannot be changed, lifestyle choices can help reduce breast cancer risk:</p>
-                    <ul class="symptoms-list">
-                        <li>Maintain a healthy weight</li>
-                        <li>Exercise regularly</li>
-                        <li>Limit alcohol consumption</li>
-                        <li>Eat a balanced diet</li>
-                        <li>Breastfeed if possible</li>
-                    </ul>
-                </div>
-                <div class="info-card">
-                    <h3>Screening Guidelines</h3>
-                    <p>Regular screening is key to early detection. Recommended screenings include:</p>
-                    <ul class="symptoms-list">
-                        <li>Monthly breast self-exams</li>
-                        <li>Clinical breast exams every 3 years (ages 20-39)</li>
-                        <li>Annual mammograms (ages 40+)</li>
-                        <li>Additional screening for high-risk individuals</li>
-                    </ul>
-                </div>
+            <div class="quiz-question">
+                <p>3. How do you convert a decimal like 0.75 to a fraction?</p>
+                <input type="radio" name="q3" value="A"> A. 75/100 = 3/4<br>
+                <input type="radio" name="q3" value="B"> B. 75/10<br>
+                <input type="radio" name="q3" value="C"> C. 7.5/10<br>
+                <span class="feedback" id="feedback3"></span>
             </div>
-        </div>
-    </section>
 
-    <section class="section" id="support">
-        <div class="container">
-            <div class="info-card">
-                <h3>Support Services</h3>
-                <div class="resources-grid">
-                    <div class="resource-card">
-                        <h4>Patient Support Groups</h4>
-                        <p>Connect with others who understand your journey. Share experiences and find strength in community.</p>
-                    </div>
-                    <div class="resource-card">
-                        <h4>Financial Assistance</h4>
-                        <p>Information about programs and resources to help with treatment costs and related expenses.</p>
-                    </div>
-                    <div class="resource-card">
-                        <h4>Counseling Services</h4>
-                        <p>Professional support for patients and families dealing with emotional and psychological challenges.</p>
-                    </div>
-                </div>
+            <div class="quiz-question">
+                <p>4. Which of the following is a correct representation of the decimal 0.5?</p>
+                <input type="radio" name="q4" value="A"> A. 1/2<br>
+                <input type="radio" name="q4" value="B"> B. 5/10<br>
+                <input type="radio" name="q4" value="C"> C. Both A and B<br>
+                <span class="feedback" id="feedback4"></span>
             </div>
-        </div>
-    </section>
 
-    <section class="section" id="myths">
-        <div class="container">
-            <h3>Myths about Breast Cancer</h3>
-            <ul>
-                <li>Myth: Only women get breast cancer. <br> Fact: Men can also develop breast cancer.</li>
-                <li>Myth: Wearing a bra causes breast cancer. <br> Fact: There is no scientific evidence linking bras to breast cancer.</li>
-                <li>Myth: Only women with a family history get breast cancer. <br> Fact: Most women diagnosed have no family history.</li>
-                <li>Myth: Breast cancer is a death sentence. <br> Fact: With early detection, many women survive breast cancer.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="section" id="did-you-know">
-        <div class="container">
-            <h3>Did You Know?</h3>
-            <ul>
-                <li>Breast cancer is the most common cancer among women worldwide.</li>
-                <li>Approximately 1 in 8 women will develop breast cancer in their lifetime.</li>
-                <li>There are over 3.8 million breast cancer survivors in the United States.</li>
-                <li>Breast cancer can occur in men, though it is rare.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="section" id="facts">
-        <div class="container">
-            <h3>Mind-Blowing Facts</h3>
-            <ul>
-                <li>The first known case of breast cancer was recorded in ancient Egypt in 1600 B.C.</li>
-                <li>Breast cancer research has significantly improved detection and treatment options over the past few decades.</li>
-                <li>Genetic mutations, such as BRCA1 and BRCA2, can increase the risk of breast cancer.</li>
-                <li>Breastfeeding may lower the risk of breast cancer for some women.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="section" id="donation">
-        <div class="container">
-            <h3>Support Our Cause</h3>
-            <p>Your contributions play a vital role in funding breast cancer awareness and research initiatives. Please consider donating to help us make a difference in the lives of those affected by breast cancer.</p>
-            <div class="donation-methods">
-                <div class="donation-option">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/GTBank_logo.svg/1200px-GTBank_logo.svg.png" alt="GTBank Logo" class="donation-logo">
-                    <p>Account Number: <strong>2032202001590</strong></p>
-                </div>
-                <div class="donation-option">
-                    <img src="https://www.finextra.com/finextra-images/top_pics/xl/81c5cb874171f3560810f9dc12ecdc5e8f85193d.png" alt="Wave Mobile Money Logo" class="donation-logo">
-                    <p>Phone Number: <strong>+220 3709558</strong></p>
-                </div>
+            <div class="quiz-question">
+                <p>5. Which of the following is NOT a natural number?</p>
+                <input type="radio" name="q5" value="A"> A. 5<br>
+                <input type="radio" name="q5" value="B"> B. -3<br>
+                <input type="radio" name="q5" value="C"> C. 100<br>
+                <span class="feedback" id="feedback5"></span>
             </div>
-            <p>Thank you for your generosity and commitment to fighting breast cancer. Together, we can make a difference!</p>
-        </div>
+
+            <button type="submit">Submit Quiz</button>
+        </form>
     </section>
 
-    <footer>
-        <p>Raising awareness about breast cancer.</p>
-    </footer>
+    <!-- Assignment Section -->
+    <section id="assignment">
+        <h2>Assignment</h2>
+        <p><strong>Assignment Question:</strong></p>
+        <p>Write a comprehensive explanation of natural numbers, fractions, and decimals. Then, create a set of 10 math problems involving these concepts and provide solutions.</p>
+        <p>Please submit your assignment by sending an email to: <a href="mailto:mathbasics101@gmail.com">mathbasics101@gmail.com</a></p>
+        <p>If the link does not work, send your assignment manually to: mathbasics101@gmail.com</p>
+        <textarea id="assignmentInput" rows="6" placeholder="Write your assignment here..."></textarea>
+        <button id="submitAssignment" onclick="submitAssignment()">Submit Assignment</button>
+    </section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const stats = document.querySelectorAll('.stat-number');
-            stats.forEach(stat => {
-                const updateCount = () => {
-                    const target = +stat.getAttribute('data-target');
-                    const count = +stat.innerText;
+    <!-- Donation Section -->
+    <section id="donation">
+        <h2>PLEASE DONATE</h2>
+        <p>Account Number: 2032202001590</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/GTBank_logo.svg/768px-GTBank_logo.svg.png" alt="GTBank Logo" width="150">
+        <p>Wave Mobile: 3709558</p>
+        <img src="https://s.rfi.fr/media/display/ed44f02a-c239-11ec-b0fc-005056bf8594/w:1280/p:16x9/wave-senegal-mobile-money.png" alt="Wave Mobile Logo" width="150">
+    </section>
 
-                    const increment = target / 200;
-
-                    if (count < target) {
-                        stat.innerText = Math.ceil(count + increment);
-                        setTimeout(updateCount, 1);
-                    } else {
-                        stat.innerText = target;
-                    }
-                };
-                updateCount();
-            });
-
-            gsap.registerPlugin(ScrollTrigger);
-            const ribbons = document.getElementById("ribbons");
-            gsap.to(ribbons, {
-                y: -50,
-                duration: 2,
-                repeat: -1,
-                yoyo: true,
-                ease: "power1.inOut"
-            });
-        });
-    </script>
+    <script src="script.js"></script> <!-- Link to external JS file -->
 </body>
 </html>
