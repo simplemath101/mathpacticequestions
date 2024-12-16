@@ -31,4 +31,14 @@ document.addEventListener('DOMContentLoaded', function() {
     hamburgerMenu.addEventListener('click', function() {
         navLinks.classList.toggle('show');
     });
+
+    document.getElementById('videoLectures').addEventListener('change', function() {
+        if (this.value === 'algebra') {
+            window.open('https://videolectures101.github.io/videolectures/', '_blank');
+        } else if (this.value === 'geometry') {
+            window.open('https://videolectures101.github.io/geometryvideo/', '_blank');
+        } else if (this.value === 'arithmetic') {
+            window.open('https://videolectures101.github.io/arithmetic/', '_blank');
+        }
+    });
 });
