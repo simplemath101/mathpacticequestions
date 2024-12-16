@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Handle the selection based on which dropdown was used
             if (selectId === 'videoLectures') {
-                if (selectedTopic === 'algebra') {
-                    window.location.href = 'https://videolectures101.github.io/videolectures/';
-                } else if (selectedTopic === 'geometry') {
-                    window.location.href = 'https://videolectures101.github.io/geometryvideo/';
-                } else if (selectedTopic === 'arithmetic') {
-                    window.location.href = 'https://videolectures101.github.io/arithmetic/';
+                // Get the URL from the selected option's data-url attribute
+                const selectedOption = e.target.querySelector(`option[value="${selectedTopic}"]`);
+                const url = selectedOption.getAttribute('data-url');
+                
+                if (url) {
+                    window.location.href = url;
                 }
             }
         });
@@ -27,3 +27,4 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.classList.toggle('show');
     });
 });
+```​​​​​​​​​​​​​​​​
