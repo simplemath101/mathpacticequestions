@@ -8,19 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectId = e.target.id;
             
             // Handle the selection based on which dropdown was used
-            switch(selectId) {
-                case 'videoLectures':
-                    console.log('Video Lecture selected:', selectedTopic);
-                    // Add your video lecture logic here
-                    break;
-                case 'speedTest':
-                    console.log('Speed Test selected:', selectedTopic);
-                    // Add your speed test logic here
-                    break;
-                case 'resources':
-                    console.log('Resource selected:', selectedTopic);
-                    // Add your resources logic here
-                    break;
+            if (selectId === 'videoLectures') {
+                if (selectedTopic === 'algebra') {
+                    window.location.href = 'https://videolectures101.github.io/videolectures/';
+                } else if (selectedTopic === 'geometry') {
+                    window.location.href = 'https://videolectures101.github.io/geometryvideo/';
+                } else if (selectedTopic === 'arithmetic') {
+                    window.location.href = 'https://videolectures101.github.io/arithmetic/';
+                }
             }
         });
     });
@@ -30,15 +25,5 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.getElementById('navLinks');
     hamburgerMenu.addEventListener('click', function() {
         navLinks.classList.toggle('show');
-    });
-
-    document.getElementById('videoLectures').addEventListener('change', function() {
-        if (this.value === 'algebra') {
-            window.open('https://videolectures101.github.io/videolectures/', '_blank');
-        } else if (this.value === 'geometry') {
-            window.open('https://videolectures101.github.io/geometryvideo/', '_blank');
-        } else if (this.value === 'arithmetic') {
-            window.open('https://videolectures101.github.io/arithmetic/', '_blank');
-        }
     });
 });
