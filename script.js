@@ -8,15 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectId = e.target.id;
             
             // Handle the selection based on which dropdown was used
-            if (selectId === 'videoLectures') {
-                // Get the URL from the selected option's data-url attribute
-                const selectedOption = e.target.querySelector(`option[value="${selectedTopic}"]`);
-                const url = selectedOption.getAttribute('data-url');
-                
-                if (url) {
-                    window.location.href = url;
-                }
-            }
+            // Add any specific handling for speedTest and resources dropdowns here if needed
         });
     });
 
@@ -27,4 +19,3 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.classList.toggle('show');
     });
 });
-​​​​​​​​​​​​
