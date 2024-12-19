@@ -16,24 +16,12 @@
         <button class="hamburger" id="hamburgerMenu">&#9776;</button>
         <div class="nav-links" id="navLinks">
             <a href="https://videolectures101.github.io/mathvideolecture/" target="_blank">Video Lectures</a>
-            <div class="dropdown">
-                <label for="speedTest">Test Your Speed</label>
-                <select id="speedTest" class="dropdown-select">
-                    <option value="" disabled selected>Select Topic</option>
-                    <option value="algebra">Algebra</option>
-                    <option value="geometry">Geometry</option>
-                    <option value="arithmetic">Arithmetic</option>
-                </select>
-            </div>
-            <div class="dropdown">
-                <label for="resources">Downloadable Resources</label>
-                <select id="resources" class="dropdown-select">
-                    <option value="" disabled selected>Select Topic</option>
-                    <option value="algebra">Algebra</option>
-                    <option value="geometry">Geometry</option>
-                    <option value="arithmetic">Arithmetic</option>
-                </select>
-            </div>
+            <a href="https://mathquiz101.github.io/mathquiz1/" target="_blank">Test Your Speed</a>
+            <a href="#" class="resources-link">
+                <span>Downloadable Resources</span>
+                <i class="lock-icon">🔒</i>
+                <div class="upgrade-tooltip">Upgrade to Pro to unlock</div>
+            </a>
             <a href="https://mathquiz101.github.io/Mathquiz101/" target="_blank">Practice Questions</a>
         </div>
     </nav>
@@ -65,25 +53,59 @@
                 <p>Engaging video lectures, quizzes, and downloadable resources.</p>
             </div>
         </div>
+        <!-- Fixed Elements -->
+    <div class="donate-banner">
+        <a href="https://mathquiz101.github.io/Mathquiz101/" target="_blank" rel="noopener noreferrer">
+            PLEASE CLICK HERE TO DONATE
+        </a>
+    </div>
 
-        <div class="donation-section">
-            <h2>🚨 Support Our Educational Mission By Donating! 🚨</h2>
-            <p class="urgent-msg">Help Us Create More Quality Content!</p>
-            <div class="donation-content">
-                <p>Your contribution helps us provide more free quality educational resources for students worldwide:</p>
+
+       <!-- Donation Section -->
+       <section id="donate" class="donate-section">
+        <h2 class="donation-title">Over 90% of children in sub-Saharan Africa can't read or solve basic math by age 10.</h2>
+        
+        <div class="donation-image-container">
+            <img src="https://www.educationcannotwait.org/sites/default/files/styles/de2e_standard/public/2022-03/DRC_banner%20%281%29.jpg"
+                 alt="Children in classroom in DRC" 
+                 class="donation-image"
+                 loading="lazy">
+        </div>
+        
+        <p class="donation-description">
+            Worse still, over 75% of Africans have no access to free online tutoring or educational resources. 
+            Your support can change this. Donate today to help us provide free learning tools and unlock the 
+            potential of millions of bright young minds.
+        </p>
+    </section>
+    </div>
+ <!-- Telegram Popup -->
+    <div class="telegram-popup" id="telegramPopup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            
+            <div class="popup-header">
+                <img src="https://logos-world.net/wp-content/uploads/2021/03/Telegram-Symbol.png" 
+                     alt="Telegram Logo" 
+                     class="telegram-logo">
+                <h2>🚨 Limited Time Access! 🚨</h2>
+            </div>
+
+            <div class="popup-body">
+                <p class="urgent-msg">⚠️ Our Telegram group is closing in less than 24 hours!</p>
+                <p>Join our exclusive Telegram channel to access:</p>
                 <ul>
-                    <li>📚 Free Educational Resources</li>
-                    <li>📝 Quality Math Content</li>
-                    <li>👥 Better Learning Tools</li>
-                    <li>🎯 Enhanced Features</li>
+                    <li>📚 Free Video Lectures</li>
+                    <li>📝 Study Materials</li>
+                    <li>👥 Community Support</li>
+                    <li>🎯 Practice Problems</li>
                 </ul>
-                <a href="https://videolectures101.github.io/videolectures/" class="join-btn" target="_blank">
-                    DONATE HERE!
+                <a href="https://t.me/mathhub101" class="join-btn" target="_blank">
+                    Join Now Before It's Too Late!
                 </a>
             </div>
         </div>
     </div>
-
     <footer class="footer">
         <p>&copy; 2024 Math Genius Academy. All Rights Reserved.</p>
     </footer>
