@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedTopic = e.target.value;
             const selectId = e.target.id;
             
-            // Handle the selection based on which dropdown was used
-            // Add any specific handling for speedTest and resources dropdowns here if needed
+        
         });
     });
 
@@ -19,3 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.classList.toggle('show');
     });
 });
+
+// Show popup when page loads
+window.onload = function() {
+  document.getElementById('telegramPopup').style.display = 'block';
+}
+
+// Close popup function
+function closePopup() {
+  document.getElementById('telegramPopup').style.display = 'none';
+}
