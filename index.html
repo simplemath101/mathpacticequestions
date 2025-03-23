@@ -3,113 +3,510 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Genius Academy</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Mathematics Quiz</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-selection {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        select {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        #quiz-container {
+            display: none;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style-type: none;
+        }
+
+        .option {
+            padding: 10px 15px;
+            margin: 8px 0;
+            background-color: var(--light-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #d6dbdf;
+        }
+
+        .option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #results-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .result-info {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .pro-upgrade {
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .pro-upgrade-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .pro-upgrade h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .pro-upgrade p {
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .disabled-option {
+            opacity: 0.6;
+            filter: blur(0.5px);
+            pointer-events: none;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
 </head>
 <body>
-    <div class="mobile-notice" id="mobileNotice">
-        📱 For the best experience, please rotate your device to landscape mode.
-        <button class="notice-close" onclick="this.parentElement.style.display='none'">×</button>
-    </div>
-    <nav class="navbar">
-        <div class="logo">Math Genius Academy</div>
-        <button class="hamburger" id="hamburgerMenu">&#9776;</button>
-        <div class="nav-links" id="navLinks">
-            <a href="https://videolectures101.github.io/mathvideolecture/" target="_blank">Video Lectures</a>
-            <a href="https://mathquiz101.github.io/mathquiz1/" target="_blank">Test Your Speed</a>
-            <a href="#" class="resources-link">
-                <span>Downloadable Resources</span>
-                <i class="lock-icon">🔒</i>
-                <div class="upgrade-tooltip">Upgrade to Pro to unlock</div>
-            </a>
-            <a href="https://mathquiz101.github.io/Mathquiz101/" target="_blank">Practice Questions</a>
-        </div>
-    </nav>
-
-    <div class="upgrade-banner">
-        <a href="https://pricingpage101.github.io/pricings/" class="upgrade-link">
-            <span class="pro-button">🌟 Upgrade to Pro! 🌟</span>
-        </a>
-        <a href="https://pricingpage101.github.io/donation/" class="donate-link">
-            <span class="donate-button">💝 Donate Here! 💝</span>
-        </a>
-    </div>
-
     <div class="container">
-        <h1>Welcome to Math Genius Academy</h1>
-        <p>Your comprehensive online mathematics learning platform. Explore various mathematical disciplines with expert-curated content.</p>
-        
-        <div class="feature-grid">
-            <div class="feature-box">
-                <h2>Personalized Learning</h2>
-                <p>Tailored mathematical learning paths for students of all levels.</p>
+        <header>
+            <h1>Mathematics Quiz</h1>
+            <p>Test your knowledge in various mathematics topics</p>
+        </header>
+
+        <div class="content">
+            <div class="topic-selection" id="topic-selection">
+                <h2>Select a Topic</h2>
+                <p>Choose a mathematics topic to start your 10-question quiz</p>
+                <select id="topic-dropdown">
+                    <option value="" disabled selected>-- Select a Topic --</option>
+                    <option value="algebra">Algebra</option>
+                    <option value="geometry">Geometry</option>
+                    <option value="calculus">Calculus</option>
+                    <option value="statistics" class="pro-only">Statistics (Pro Only)</option>
+                    <option value="trigonometry" class="pro-only">Trigonometry (Pro Only)</option>
+                    <option value="number-theory" class="pro-only">Number Theory (Pro Only)</option>
+                    <option value="discrete-math" class="pro-only">Discrete Mathematics (Pro Only)</option>
+                    <option value="linear-algebra" class="pro-only">Linear Algebra (Pro Only)</option>
+                </select>
+                <button id="start-btn" class="btn">Start Quiz</button>
             </div>
-            <div class="feature-box">
-                <h2>Expert Tutors</h2>
-                <p>Learn from experienced mathematicians and educators.</p>
+
+            <div id="quiz-container">
+                <div class="progress-container">
+                    <p id="progress-text">Question 1 of 10</p>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                </div>
+                <div id="question-display"></div>
+                <button id="submit-btn" class="btn">Submit Answer</button>
+                <button id="next-btn" class="btn" style="display: none;">Next Question</button>
             </div>
-            <div class="feature-box">
-                <h2>Interactive Content</h2>
-                <p>Engaging video lectures, quizzes, and downloadable resources.</p>
+
+            <div id="results-container">
+                <h2>Quiz Results</h2>
+                <div class="result-info">You've completed the quiz!</div>
+                <div class="score">Your score: <span id="score">0</span>/10</div>
+                <button id="restart-btn" class="btn">Try Another Topic</button>
             </div>
         </div>
-        <!-- Fixed Elements -->
-    <div class="donate-banner">
-        <a href="https://pricingpage101.github.io/donation/" target="_blank" rel="noopener noreferrer">
-            PLEASE CLICK HERE TO DONATE
-        </a>
     </div>
 
-
-       <!-- Donation Section -->
-       <section id="donate" class="donate-section">
-        <h2 class="donation-title">Over 90% of children in sub-Saharan Africa can't read or solve basic math by age 10.</h2>
-        
-        <div class="donation-image-container">
-            <img src="https://www.educationcannotwait.org/sites/default/files/styles/de2e_standard/public/2022-03/DRC_banner%20%281%29.jpg"
-                 alt="Children in classroom in DRC" 
-                 class="donation-image"
-                 loading="lazy">
+    <div class="pro-upgrade" id="pro-upgrade">
+        <div class="pro-upgrade-content">
+            <h2>UPGRADE TO PRO</h2>
+            <p>This topic is only available in the PRO version.</p>
+            <p>Upgrade today to access all mathematics topics and thousands of premium questions!</p>
+            <button class="close-btn" id="close-pro-modal">Maybe Later</button>
         </div>
-        
-        <p class="donation-description">
-            Worse still, over 75% of Africans have no access to free online tutoring or educational resources. 
-            Your support can change this. Donate today to help us provide free learning tools and unlock the 
-            potential of millions of bright young minds.
-        </p>
-    </section>
     </div>
- <!-- Telegram Popup -->
-    <div class="telegram-popup" id="telegramPopup">
-        <div class="popup-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
+
+    <script>
+        // DOM Elements
+        const topicSelection = document.getElementById('topic-selection');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const topicDropdown = document.getElementById('topic-dropdown');
+        const startBtn = document.getElementById('start-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const questionDisplay = document.getElementById('question-display');
+        const scoreSpan = document.getElementById('score');
+        const proUpgrade = document.getElementById('pro-upgrade');
+        const closeProModal = document.getElementById('close-pro-modal');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress');
+
+        // Question Banks (to be filled manually later)
+        const questionBanks = {
+            algebra: [],
+            geometry: [],
+            calculus: []
+        };
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        // Helper Functions
+        function getRandomQuestions(topic, count) {
+            // Check if we have enough questions in the bank
+            if (questionBanks[topic].length < count) {
+                return [...questionBanks[topic]]; // Return all available questions
+            }
             
-            <div class="popup-header">
-                <img src="https://logos-world.net/wp-content/uploads/2021/03/Telegram-Symbol.png" 
-                     alt="Telegram Logo" 
-                     class="telegram-logo">
-                <h2>🚨 Limited Time Access! 🚨</h2>
-            </div>
+            // Shuffle and get random questions
+            return shuffleArray([...questionBanks[topic]]).slice(0, count);
+        }
 
-            <div class="popup-body">
-                <p class="urgent-msg">⚠️ Our Telegram group is closing in less than 24 hours!</p>
-                <p>Join our exclusive Telegram channel to access:</p>
-                <ul>
-                    <li>📚 Free Video Lectures</li>
-                    <li>📝 Study Materials</li>
-                    <li>👥 Community Support</li>
-                    <li>🎯 Practice Problems</li>
-                </ul>
-                <a href="https://t.me/mathhub101" class="join-btn" target="_blank">
-                    Join Now Before It's Too Late!
-                </a>
-            </div>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>&copy; 2024 Math Genius Academy. All Rights Reserved.</p>
-    </footer>
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-    <script src="scripts.js"></script>
+        function displayQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const options = shuffleArray([...question.options]);
+            
+            let questionHTML = `
+                <div class="question-container">
+                    <div class="question">${currentQuestionIndex + 1}. ${question.question}</div>
+                    <ul class="options">
+            `;
+            
+            options.forEach((option, index) => {
+                questionHTML += `
+                    <li class="option" data-index="${index}">${option}</li>
+                `;
+            });
+            
+            questionHTML += `
+                    </ul>
+                </div>
+            `;
+            
+            questionDisplay.innerHTML = questionHTML;
+            
+            // Update progress
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Add click event listeners to options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store selected option
+                    selectedOption = options[this.dataset.index];
+                });
+            });
+            
+            // Hide next button and show submit button
+            submitBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'none';
+            
+            // Reset selected option
+            selectedOption = null;
+        }
+
+        function checkAnswer() {
+            if (selectedOption === null) {
+                alert('Please select an option');
+                return;
+            }
+            
+            const question = currentQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach(option => {
+                const optionText = option.textContent;
+                
+                // Highlight correct answer
+                if (optionText === question.answer) {
+                    option.style.backgroundColor = '#2ecc71'; // Green for correct
+                    option.style.color = 'white';
+                }
+                
+                // Make options non-clickable
+                option.style.pointerEvents = 'none';
+            });
+            
+            // If selected option is correct, increment score
+            if (selectedOption === question.answer) {
+                score++;
+            } else {
+                // Highlight selected wrong option
+                options.forEach(option => {
+                    if (option.classList.contains('selected') && option.textContent !== question.answer) {
+                        option.style.backgroundColor = '#e74c3c'; // Red for wrong
+                        option.style.color = 'white';
+                    }
+                });
+            }
+            
+            // Hide submit button and show next button
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreSpan.textContent = score;
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', function() {
+            const selectedTopic = topicDropdown.value;
+            
+            if (!selectedTopic) {
+                alert('Please select a topic');
+                return;
+            }
+            
+            if (['statistics', 'trigonometry', 'number-theory', 'discrete-math', 'linear-algebra'].includes(selectedTopic)) {
+                proUpgrade.style.display = 'flex';
+                return;
+            }
+            
+            // Reset quiz state
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            // Get random questions for the selected topic
+            currentQuestions = getRandomQuestions(selectedTopic, 10);
+            
+            // If there are not enough questions, alert the user
+            if (currentQuestions.length < 10) {
+                alert(`Only ${currentQuestions.length} questions available for this topic. Adding more questions to the bank is recommended.`);
+            }
+            
+            // Hide topic selection and show quiz
+            topicSelection.style.display = 'none';
+            quizContainer.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            
+            // Display first question
+            displayQuestion();
+        });
+
+        submitBtn.addEventListener('click', checkAnswer);
+
+        nextBtn.addEventListener('click', function() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuestions.length) {
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        restartBtn.addEventListener('click', function() {
+            // Go back to topic selection
+            topicSelection.style.display = 'block';
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'none';
+            
+            // Reset dropdown
+            topicDropdown.value = '';
+        });
+
+        closeProModal.addEventListener('click', function() {
+            proUpgrade.style.display = 'none';
+        });
+
+        // Manage Pro-only options in the dropdown
+        topicDropdown.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const selectedValue = this.value;
+            
+            if (['statistics', 'trigonometry', 'number-theory', 'discrete-math', 'linear-algebra'].includes(selectedValue)) {
+                proUpgrade.style.display = 'flex';
+                this.value = ''; // Reset to default option
+            }
+        });
+
+        // Initialize Quiz - Populate with Sample Questions
+        // The question banks are left empty as requested and will be filled manually later
+
+        // Temporary placeholder to check if question banks are empty
+        // This will alert users if they try to start a quiz without any questions in the bank
+        startBtn.addEventListener('mouseenter', function() {
+            const selectedTopic = topicDropdown.value;
+            if (selectedTopic && questionBanks[selectedTopic].length === 0) {
+                console.warn(`Warning: No questions in the ${selectedTopic} question bank. Please add questions manually.`);
+            }
+        });
+    </script>
 </body>
 </html>
