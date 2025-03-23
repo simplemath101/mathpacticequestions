@@ -297,11 +297,92 @@
         const progressBar = document.getElementById('progress');
 
         // Question Banks (to be filled manually later)
-        const questionBanks = {
-            algebra: [],
-            geometry: [],
-            calculus: []
-        };
+
+const questionBanks = {
+    algebra: [
+        {
+            question: "What is the solution to the equation 3x + 7 = 22?",
+            options: ["x = 5", "x = 6", "x = 7", "x = 8"],
+            answer: 0
+        },
+        {
+            question: "Which of the following is the factored form of x² - 9?",
+            options: ["(x - 3)(x + 3)", "(x - 9)(x + 1)", "(x - 3)²", "(x + 3)²"],
+            answer: 0
+        },
+        {
+            question: "What is the slope of the line represented by the equation 4x + 2y = 8?",
+            options: ["-2", "2", "-4", "4"],
+            answer: 0
+        },
+        {
+            question: "Solve for x in the system: 2x + y = 5 and x - y = 1",
+            options: ["x = 2", "x = 3", "x = 1.5", "x = 4"],
+            answer: 0
+        },
+        {
+            question: "Which expression is equivalent to (2x - 3)(x + 4)?",
+            options: ["2x² + 5x - 12", "2x² + 8x - 12", "2x² - 3x - 12", "2x² + 5x - 3"],
+            answer: 1
+        }
+    ],
+    
+    geometry: [
+        {
+            question: "What is the area of a circle with radius 6 cm?",
+            options: ["12π cm²", "36π cm²", "6π cm²", "18π cm²"],
+            answer: 1
+        },
+        {
+            question: "If two angles in a triangle measure 30° and 45°, what is the measure of the third angle?",
+            options: ["105°", "90°", "75°", "115°"],
+            answer: 0
+        },
+        {
+            question: "What is the formula for the volume of a sphere?",
+            options: ["4/3πr³", "4πr²", "πr²h", "2πr"],
+            answer: 0
+        },
+        {
+            question: "In a right triangle, if one leg is 8 units and the hypotenuse is 17 units, what is the length of the other leg?",
+            options: ["15 units", "9 units", "16 units", "12 units"],
+            answer: 0
+        },
+        {
+            question: "What is the sum of interior angles in a hexagon?",
+            options: ["540°", "720°", "360°", "900°"],
+            answer: 1
+        }
+    ],
+    
+    calculus: [
+        {
+            question: "What is the derivative of f(x) = x³?",
+            options: ["f'(x) = 3x²", "f'(x) = 3x", "f'(x) = x²", "f'(x) = 3"],
+            answer: 0
+        },
+        {
+            question: "What is the integral of f(x) = 2x?",
+            options: ["F(x) = x² + C", "F(x) = 2x² + C", "F(x) = x² - C", "F(x) = x + C"],
+            answer: 0
+        },
+        {
+            question: "What is the derivative of sin(x)?",
+            options: ["cos(x)", "-sin(x)", "tan(x)", "-cos(x)"],
+            answer: 0
+        },
+        {
+            question: "Using the chain rule, what is the derivative of f(x) = (2x + 1)⁵?",
+            options: ["f'(x) = 10(2x + 1)⁴", "f'(x) = 5(2x + 1)⁴", "f'(x) = 10(2x + 1)³", "f'(x) = 5(2x + 1)²"],
+            answer: 1
+        },
+        {
+            question: "What does L'Hôpital's rule help determine?",
+            options: ["Limits of indeterminate forms", "Definite integrals", "Derivatives of logarithmic functions", "Solutions to differential equations"],
+            answer: 0
+        }
+    ]
+};
 
         let currentQuestions = [];
         let currentQuestionIndex = 0;
