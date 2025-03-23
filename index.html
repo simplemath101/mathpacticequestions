@@ -297,8 +297,7 @@
         const progressBar = document.getElementById('progress');
 
         // Question Banks (to be filled manually later)
-
-const questionBanks = {
+        const questionBanks = {
     algebra: [
         {
             question: "What is the solution to the equation 3x + 7 = 22?",
@@ -459,46 +458,46 @@ const questionBanks = {
             selectedOption = null;
         }
 
-        function checkAnswer() {
-            if (selectedOption === null) {
-                alert('Please select an option');
-                return;
-            }
-            
-            const question = currentQuestions[currentQuestionIndex];
-            const options = document.querySelectorAll('.option');
-            
-            // Find the index of the selected option
-            const selectedIndex = Array.from(options).findIndex(option => 
-                option.classList.contains('selected')
-            );
-            
-            options.forEach(option => {
-                const optionIndex = parseInt(option.dataset.index);
-                
-                // Highlight correct answer
-                if (optionIndex === question.answer) {
-                    option.style.backgroundColor = '#2ecc71'; // Green for correct
-                    option.style.color = 'white';
-                }
-                
-                // Make options non-clickable
-                option.style.pointerEvents = 'none';
-            });
-            
-            // If selected option is correct, increment score
-            if (selectedIndex === question.answer) {
-                score++;
-            } else {
-                // Highlight selected wrong option
-                options[selectedIndex].style.backgroundColor = '#e74c3c'; // Red for wrong
-                options[selectedIndex].style.color = 'white';
-            }
-            
-            // Hide submit button and show next button
-            submitBtn.style.display = 'none';
-            nextBtn.style.display = 'inline-block';
+       function checkAnswer() {
+    if (selectedOption === null) {
+        alert('Please select an option');
+        return;
+    }
+    
+    const question = currentQuestions[currentQuestionIndex];
+    const options = document.querySelectorAll('.option');
+    const correctOptionText = question.options[question.answer];
+    
+    options.forEach(option => {
+        const optionText = option.textContent;
+        
+        // Highlight correct answer
+        if (optionText === correctOptionText) {
+            option.style.backgroundColor = '#2ecc71'; // Green for correct
+            option.style.color = 'white';
         }
+        
+        // Make options non-clickable
+        option.style.pointerEvents = 'none';
+    });
+    
+    // If selected option is correct, increment score
+    if (selectedOption === correctOptionText) {
+        score++;
+    } else {
+        // Highlight selected wrong option
+        options.forEach(option => {
+            if (option.classList.contains('selected') && option.textContent !== correctOptionText) {
+                option.style.backgroundColor = '#e74c3c'; // Red for wrong
+                option.style.color = 'white';
+            }
+        });
+    }
+    
+    // Hide submit button and show next button
+    submitBtn.style.display = 'none';
+    nextBtn.style.display = 'inline-block';
+}
 
         function showResults() {
             quizContainer.style.display = 'none';
