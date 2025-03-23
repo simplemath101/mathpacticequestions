@@ -468,11 +468,16 @@ const questionBanks = {
             const question = currentQuestions[currentQuestionIndex];
             const options = document.querySelectorAll('.option');
             
+            // Find the index of the selected option
+            const selectedIndex = Array.from(options).findIndex(option => 
+                option.classList.contains('selected')
+            );
+            
             options.forEach(option => {
-                const optionText = option.textContent;
+                const optionIndex = parseInt(option.dataset.index);
                 
                 // Highlight correct answer
-                if (optionText === question.answer) {
+                if (optionIndex === question.answer) {
                     option.style.backgroundColor = '#2ecc71'; // Green for correct
                     option.style.color = 'white';
                 }
@@ -482,16 +487,12 @@ const questionBanks = {
             });
             
             // If selected option is correct, increment score
-            if (selectedOption === question.answer) {
+            if (selectedIndex === question.answer) {
                 score++;
             } else {
                 // Highlight selected wrong option
-                options.forEach(option => {
-                    if (option.classList.contains('selected') && option.textContent !== question.answer) {
-                        option.style.backgroundColor = '#e74c3c'; // Red for wrong
-                        option.style.color = 'white';
-                    }
-                });
+                options[selectedIndex].style.backgroundColor = '#e74c3c'; // Red for wrong
+                options[selectedIndex].style.color = 'white';
             }
             
             // Hide submit button and show next button
