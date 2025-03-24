@@ -222,6 +222,85 @@
             width: 0%;
             transition: width 0.3s ease;
         }
+        .popup-ad {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    text-align: center;
+    z-index: 9999;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.popup-ad h3 {
+    color: white;
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.popup-ad p {
+    color: white;
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+.popup-ad .cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #ff9800;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    margin: 20px 0;
+    font-size: 18px;
+    width: 80%;
+    max-width: 300px;
+}
+
+.popup-ad .countdown {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #ffc107;
+    font-size: 16px;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+.popup-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -278,6 +357,19 @@
             <button class="close-btn" id="close-pro-modal">Maybe Later</button>
         </div>
     </div>
+<a id="popupAd" class="popup-ad" href="https://yourquizsite.com/pro" target="_blank">
+    <button class="close-button" onclick="closePopup(event)">✕</button>
+    <div class="popup-content">
+        <h3>🚀 Upgrade to Quiz Pro!</h3>
+        <img class="popup-image" src="https://yourquizsite.com/pro-image.jpg" alt="Quiz Pro">
+        <p><strong>Unlock More Features:</strong> Get access to premium quizzes, advanced analytics, and exclusive rewards!</p>
+        <p>Join the Pro Version now and take your learning to the next level! 🚀</p>    
+        <div class="cta-button">
+            CLICK HERE TO UPGRADE
+        </div>
+        <p id="countdown" class="countdown">Closing in 5s</p>
+    </div>
+</a>
 
     <script>
         // DOM Elements
@@ -576,7 +668,31 @@
                 this.value = ''; // Reset to default option
             }
         });
+function showPopup() {
+    let popup = document.getElementById("popupAd");
+    let countdown = document.getElementById("countdown");
+    let timeLeft = 35;
+    popup.style.display = "flex"; // Changed to flex for better centering
+    
+    let timer = setInterval(() => {
+        timeLeft--;
+        countdown.innerText = `Closing in ${timeLeft}s`;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            popup.style.display = "none";
+        }
+    }, 1000);
+}
 
+function closePopup(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    document.getElementById("popupAd").style.display = "none";
+}
+
+// Show pop-up every 55 seconds
+setInterval(showPopup, 55000);
+});
         // Initialize Quiz - Populate with Sample Questions
         // The question banks are left empty as requested and will be filled manually later
 
