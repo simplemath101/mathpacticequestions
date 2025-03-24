@@ -668,7 +668,7 @@
                 this.value = ''; // Reset to default option
             }
         });
-function showPopup() {
+        function showPopup() {
     let popup = document.getElementById("popupAd");
     let countdown = document.getElementById("countdown");
     let timeLeft = 35;
@@ -685,14 +685,18 @@ function showPopup() {
 }
 
 function closePopup(event) {
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault(); // Prevent default link behavior
+    event.stopPropagation(); // Stop event from bubbling
     document.getElementById("popupAd").style.display = "none";
 }
 
+// Close button event listener
+document.querySelector('.close-button').addEventListener('click', closePopup);
+}
+        });
 // Show pop-up every 55 seconds
 setInterval(showPopup, 55000);
-});
+        
         // Initialize Quiz - Populate with Sample Questions
         // The question banks are left empty as requested and will be filled manually later
 
