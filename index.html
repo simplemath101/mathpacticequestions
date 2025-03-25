@@ -867,14 +867,7 @@ setInterval(showPopup, 55000);
         // Initialize Quiz - Populate with Sample Questions
         // The question banks are left empty as requested and will be filled manually later
 
-        // Temporary placeholder to check if question banks are empty
-        // This will alert users if they try to start a quiz without any questions in the bank
-        startBtn.addEventListener('mouseenter', function() {
-            const selectedTopic = topicDropdown.value;
-            if (selectedTopic && questionBanks[selectedTopic].length === 0) {
-                console.warn(`Warning: No questions in the ${selectedTopic} question bank. Please add questions manually.`);
-            }
-        });
+        
          // Share functionality variables
         let shareCount = 0;
         const telegramShareBtn = document.getElementById('telegram-share-btn');
