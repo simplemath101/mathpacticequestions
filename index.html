@@ -300,7 +300,54 @@
     border-radius: 5px;
     margin-bottom: 10px;
 }
+.share-container {
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
 
+        .share-progress {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .share-progress-bar {
+            width: 0%;
+            height: 20px;
+            background-color: #4CAF50;
+            transition: width 0.5s ease;
+        }
+
+        .telegram-share-btn {
+            background-color: #2eaade;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+
+        .telegram-share-btn:hover {
+            background-color: #239ac4;
+        }
+
+        .telegram-share-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .share-instructions {
+            color: #666;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -370,7 +417,32 @@
         <p id="countdown" class="countdown">Closing in 5s</p>
     </div>
 </a>
-
+<div id="results-container">
+        <h2>Quiz Results</h2>
+        <div class="result-info">You've completed the quiz!</div>
+        <div class="score">Your score: <span id="score">0</span>/10</div>
+        
+        <div class="share-container">
+            <h3>Share and Unlock Full Score!</h3>
+            <p class="share-instructions">Share the quiz with friends to reveal your complete results!</p>
+            
+            <div class="share-progress">
+                <div class="share-progress-bar" id="share-progress-bar"></div>
+            </div>
+            
+            <p id="share-count-text">Shares: 0/5</p>
+            
+            <button id="telegram-share-btn" class="telegram-share-btn">
+                Share on Telegram
+            </button>
+            
+            <button id="reveal-score-btn" class="btn" disabled>
+                Reveal Full Score
+            </button>
+        </div>
+        
+        <button id="restart-btn" class="btn">Try Another Topic</button>
+    </div>
     <script>
         // DOM Elements
         const topicSelection = document.getElementById('topic-selection');
@@ -707,6 +779,65 @@ setInterval(showPopup, 55000);
                 console.warn(`Warning: No questions in the ${selectedTopic} question bank. Please add questions manually.`);
             }
         });
+         // Share functionality variables
+        let shareCount = 0;
+        const telegramShareBtn = document.getElementById('telegram-share-btn');
+        const revealScoreBtn = document.getElementById('reveal-score-btn');
+        const shareProgressBar = document.getElementById('share-progress-bar');
+        const shareCountText = document.getElementById('share-count-text');
+
+        // Telegram share message
+        const telegramShareMessage = encodeURIComponent(
+            "➗✨ 😲 99% of people can't get a perfect score on this Math quiz! " +
+            "Think you're in the top 1%? Test your knowledge now and challenge a friend to beat you! 🚀🔥\n\n" +
+            "CLICK THE LINK FOR THE QUIZ 👇 [https://yourquizlink.com]"
+        );
+
+        // Function to handle share action
+        function handleShare() {
+            // Increment share count
+            shareCount++;
+
+            // Update progress bar and text
+            const progressPercentage = (shareCount / 5) * 100;
+            shareProgressBar.style.width = `${progressPercentage}%`;
+            shareCountText.textContent = `Shares: ${shareCount}/5`;
+
+            // Open Telegram share link
+            window.open(`https://t.me/share/url?url=${telegramShareMessage}`, '_blank');
+
+            // Enable reveal score button if shares reach 5
+            if (shareCount >= 5) {
+                revealScoreBtn.disabled = false;
+                telegramShareBtn.disabled = true;
+            }
+        }
+
+        // Function to reveal full score (can be expanded with more details)
+        function revealFullScore() {
+            alert(`Congratulations! Your full detailed score is ${score}/10. 
+Great job completing the mathematics quiz!`);
+        }
+
+        // Add event listeners
+        telegramShareBtn.addEventListener('click', handleShare);
+        revealScoreBtn.addEventListener('click', revealFullScore);
+
+        // Modify existing results display to work with new share mechanism
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Partially mask the score
+            scoreSpan.textContent = '**'; // Masked until sharing
+
+            // Reset share count and progress
+            shareCount = 0;
+            shareProgressBar.style.width = '0%';
+            shareCountText.textContent = 'Shares: 0/5';
+            revealScoreBtn.disabled = true;
+            telegramShareBtn.disabled = false;
+        }
     </script>
 </body>
 </html>
