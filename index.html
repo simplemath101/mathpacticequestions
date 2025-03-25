@@ -869,64 +869,67 @@ setInterval(showPopup, 55000);
 
         
          // Share functionality variables
-        let shareCount = 0;
-        const telegramShareBtn = document.getElementById('telegram-share-btn');
-        const revealScoreBtn = document.getElementById('reveal-score-btn');
-        const shareProgressBar = document.getElementById('share-progress-bar');
-        const shareCountText = document.getElementById('share-count-text');
+       document.addEventListener('DOMContentLoaded', () => {
+    // Share functionality variables
+    let shareCount = 0;
+    const telegramShareBtn = document.getElementById('telegram-share-btn');
+    const revealScoreBtn = document.getElementById('reveal-score-btn');
+    const shareProgressBar = document.getElementById('share-progress-bar');
+    const shareCountText = document.getElementById('share-count-text');
 
-        // Telegram share message
-        const telegramShareMessage = encodeURIComponent(
-            "➗✨ 😲 99% of people can't get a perfect score on this Math quiz! " +
-            "Think you're in the top 1%? Test your knowledge now and challenge a friend to beat you! 🚀🔥\n\n" +
-            "CLICK THE LINK FOR THE QUIZ 👇 [https://yourquizlink.com]"
-        );
+    // Telegram share message
+    const telegramShareMessage = encodeURIComponent(
+        "➗✨ 99% of people can't get a perfect score on this Math quiz! " +
+        "Think you're in the top 1%? Test your knowledge now and challenge a friend to beat you! 🚀🔥\n\n" +
+        "CLICK THE LINK FOR THE QUIZ 👇 [https://yourquizlink.com]"
+    );
 
-        // Function to handle share action
-        function handleShare() {
-            // Increment share count
-            shareCount++;
+    // Function to handle share action
+    function handleShare() {
+        // Increment share count
+        shareCount++;
 
-            // Update progress bar and text
-            const progressPercentage = (shareCount / 5) * 100;
-            shareProgressBar.style.width = `${progressPercentage}%`;
-            shareCountText.textContent = `Shares: ${shareCount}/5`;
+        // Update progress bar and text
+        const progressPercentage = (shareCount / 5) * 100;
+        shareProgressBar.style.width = `${progressPercentage}%`;
+        shareCountText.textContent = `Shares: ${shareCount}/5`;
 
-            // Open Telegram share link
-            window.open(`https://t.me/share/url?url=${telegramShareMessage}`, '_blank');
+        // Open Telegram share link
+        window.open(`https://t.me/share/url?url=${telegramShareMessage}`, '_blank');
 
-            // Enable reveal score button if shares reach 5
-            if (shareCount >= 5) {
-                revealScoreBtn.disabled = false;
-                telegramShareBtn.disabled = true;
-            }
+        // Enable reveal score button if shares reach 5
+        if (shareCount >= 5) {
+            revealScoreBtn.disabled = false;
+            telegramShareBtn.disabled = true;
         }
+    }
 
-        // Function to reveal full score (can be expanded with more details)
-        function revealFullScore() {
-            alert(`Congratulations! Your full detailed score is ${score}/10. 
+    // Function to reveal full score (can be expanded with more details)
+    function revealFullScore() {
+        alert(`Congratulations! Your full detailed score is ${score}/10. 
 Great job completing the mathematics quiz!`);
-        }
+    }
 
-        // Add event listeners
-        telegramShareBtn.addEventListener('click', handleShare);
-        revealScoreBtn.addEventListener('click', revealFullScore);
+    // Add event listeners
+    telegramShareBtn.addEventListener('click', handleShare);
+    revealScoreBtn.addEventListener('click', revealFullScore);
 
-        // Modify existing results display to work with new share mechanism
-        function showResults() {
-            quizContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
-            
-            // Partially mask the score
-            scoreSpan.textContent = '**'; // Masked until sharing
+    // Modify existing results display to work with new share mechanism
+    function showResults() {
+        quizContainer.style.display = 'none';
+        resultsContainer.style.display = 'block';
+        
+        // Partially mask the score
+        scoreSpan.textContent = '**'; // Masked until sharing
 
-            // Reset share count and progress
-            shareCount = 0;
-            shareProgressBar.style.width = '0%';
-            shareCountText.textContent = 'Shares: 0/5';
-            revealScoreBtn.disabled = true;
-            telegramShareBtn.disabled = false;
-        }
+        // Reset share count and progress
+        shareCount = 0;
+        shareProgressBar.style.width = '0%';
+        shareCountText.textContent = 'Shares: 0/5';
+        revealScoreBtn.disabled = true;
+        telegramShareBtn.disabled = false;
+    }
+});
     </script>
 </body>
 </html>
