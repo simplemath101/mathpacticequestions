@@ -763,10 +763,9 @@
     }
     
     const question = currentQuestions[currentQuestionIndex];
-    const options = document.querySelectorAll('.option');
     const correctOptionText = question.options[question.answer];
     
-    // Store user's answer
+    // Store user's answer without showing if it's correct or wrong
     userAnswers.push({
         question: question.question,
         userAnswer: selectedOption,
@@ -774,31 +773,15 @@
         isCorrect: selectedOption === correctOptionText
     });
     
-    options.forEach(option => {
-        const optionText = option.textContent;
-        
-        // Highlight correct answer
-        if (optionText === correctOptionText) {
-            option.style.backgroundColor = '#2ecc71'; // Green for correct
-            option.style.color = 'white';
-        }
-        
-        // Make options non-clickable
-        option.style.pointerEvents = 'none';
-    });
-    
-    // If selected option is correct, increment score
+    // If selected option is correct, increment score (silently)
     if (selectedOption === correctOptionText) {
         score++;
-    } else {
-        // Highlight selected wrong option
-        options.forEach(option => {
-            if (option.classList.contains('selected') && option.textContent !== correctOptionText) {
-                option.style.backgroundColor = '#e74c3c'; // Red for wrong
-                option.style.color = 'white';
-            }
-        });
     }
+    
+    // Make options non-clickable but don't change their appearance
+    document.querySelectorAll('.option').forEach(option => {
+        option.style.pointerEvents = 'none';
+    });
     
     // Hide submit button and show next button
     submitBtn.style.display = 'none';
