@@ -348,6 +348,37 @@
             color: #666;
             margin-bottom: 15px;
         }
+
+        .answers-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        #correct-answers {
+            background-color: #e8f5e9;
+        }
+
+        #wrong-answers {
+            background-color: #ffebee;
+        }
+
+        .answers-section h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .answers-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .answers-section li {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+            background-color: white;
+        }
     </style>
 </head>
 <body>
@@ -411,7 +442,19 @@
                     </button>
                 </div>
                 
-                <button id="restart-btn" class="btn">Try Another Topic</button>
+                <div id="answers-summary" style="display: none;">
+                    <h3>Your Answers Summary</h3>
+                    <div id="correct-answers" class="answers-section">
+                        <h4>Correct Answers: <span id="correct-count">0</span></h4>
+                        <ul id="correct-list"></ul>
+                    </div>
+                    <div id="wrong-answers" class="answers-section">
+                        <h4>Incorrect Answers: <span id="wrong-count">0</span></h4>
+                        <ul id="wrong-list"></ul>
+                    </div>
+                </div>
+                
+                <button id="restart-btn" class="btn" style="display: none;">Try Another Topic</button>
             </div>
         </div>
     </div>
@@ -641,6 +684,7 @@
         let currentQuestionIndex = 0;
         let score = 0;
         let selectedOption = null;
+        let userAnswers = [];
 
         // Helper Functions
         function getRandomQuestions(topic, count) {
@@ -722,6 +766,14 @@
     const options = document.querySelectorAll('.option');
     const correctOptionText = question.options[question.answer];
     
+    // Store user's answer
+    userAnswers.push({
+        question: question.question,
+        userAnswer: selectedOption,
+        correctAnswer: correctOptionText,
+        isCorrect: selectedOption === correctOptionText
+    });
+    
     options.forEach(option => {
         const optionText = option.textContent;
         
@@ -767,12 +819,16 @@
             const shareCountText = document.getElementById('share-count-text');
             const revealScoreBtn = document.getElementById('reveal-score-btn');
             const telegramShareBtn = document.getElementById('telegram-share-btn');
+            const answersSummary = document.getElementById('answers-summary');
+            const restartBtn = document.getElementById('restart-btn');
 
             if (shareProgressBar && shareCountText && revealScoreBtn && telegramShareBtn) {
                 shareProgressBar.style.width = '0%';
                 shareCountText.textContent = 'Shares: 0/5';
                 revealScoreBtn.disabled = true;
                 telegramShareBtn.disabled = false;
+                answersSummary.style.display = 'none';
+                restartBtn.style.display = 'none';
             }
         }
 
@@ -913,6 +969,44 @@ setInterval(showPopup, 55000);
         // Function to reveal full score
         function revealFullScore() {
             scoreSpan.textContent = quizScore;
+            
+            // Show answers summary
+            const answersSummary = document.getElementById('answers-summary');
+            const correctList = document.getElementById('correct-list');
+            const wrongList = document.getElementById('wrong-list');
+            const correctCount = document.getElementById('correct-count');
+            const wrongCount = document.getElementById('wrong-count');
+            
+            // Clear previous lists
+            correctList.innerHTML = '';
+            wrongList.innerHTML = '';
+            
+            // Count correct and wrong answers
+            let correctCountNum = 0;
+            let wrongCountNum = 0;
+            
+            // Populate lists
+            userAnswers.forEach(answer => {
+                const li = document.createElement('li');
+                li.textContent = `Q: ${answer.question} | Your Answer: ${answer.userAnswer} | Correct Answer: ${answer.correctAnswer}`;
+                
+                if (answer.isCorrect) {
+                    correctList.appendChild(li);
+                    correctCountNum++;
+                } else {
+                    wrongList.appendChild(li);
+                    wrongCountNum++;
+                }
+            });
+            
+            // Update counts
+            correctCount.textContent = correctCountNum;
+            wrongCount.textContent = wrongCountNum;
+            
+            // Show summary and restart button
+            answersSummary.style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'inline-block';
+            
             alert(`Congratulations! Your full score is ${quizScore}/10. Great job completing the mathematics quiz!`);
             revealScoreBtn.disabled = true;
         }
