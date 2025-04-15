@@ -695,191 +695,191 @@
         };
 
         // Initialize the quiz
-        function init() {
-            // Event listeners
-            startBtn.addEventListener('click', startQuiz);
-            restartBtn.addEventListener('click', restartQuiz);
-            topicSelectEl.addEventListener('change', handleTopicChange);
-            
-            // Disable blurred options
-            const blurredOptions = document.querySelectorAll('.blurred-option');
-            blurredOptions.forEach(option => {
-                option.disabled = true;
-                option.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    upgradeMessageEl.textContent = 'Upgrade to Pro to unlock';
-                    upgradeMessageEl.style.display = 'block';
-                    topicSelectEl.value = '';
-                });
-            });
-            
-            // Add event listeners for share functionality
-            if (telegramShareBtn && revealScoreBtn) {
-                telegramShareBtn.addEventListener('click', handleShare);
-                revealScoreBtn.addEventListener('click', revealFullScore);
-            }
-            
-            // Add popup event listeners
-            document.querySelector('.close-button').addEventListener('click', closePopup);
-            
-            // Show pop-up every 55 seconds
-            setInterval(showPopup, 55000);
-        }
+function init() {
+    // Event listeners
+    startBtn.addEventListener('click', startQuiz);
+    restartBtn.addEventListener('click', restartQuiz);
+    topicSelectEl.addEventListener('change', handleTopicChange);
+    
+    // Disable blurred options
+    const blurredOptions = document.querySelectorAll('.blurred-option');
+    blurredOptions.forEach(option => {
+        option.disabled = true;
+        option.addEventListener('click', (e) => {
+            e.preventDefault();
+            upgradeMessageEl.textContent = 'Upgrade to Pro to unlock';
+            upgradeMessageEl.style.display = 'block';
+            topicSelectEl.value = '';
+        });
+    });
+    
+    // Add event listeners for share functionality
+    if (telegramShareBtn && revealScoreBtn) {
+        telegramShareBtn.addEventListener('click', handleShare);
+        revealScoreBtn.addEventListener('click', revealFullScore);
+    }
+    
+    // Add popup event listeners
+    document.querySelector('.close-button').addEventListener('click', closePopup);
+    
+    // Show pop-up every 55 seconds
+    setInterval(showPopup, 55000);
+}
 
-        // Handle topic change
-        function handleTopicChange() {
-            const selectedTopic = topicSelectEl.value;
-            const selectedOption = topicSelectEl.options[topicSelectEl.selectedIndex];
-            
-            // Reset upgrade message
-            upgradeMessageEl.style.display = 'none';
-            
-            // Check if selected option is blurred
-            if (selectedOption && selectedOption.classList.contains('blurred-option')) {
-                upgradeMessageEl.textContent = 'Upgrade to Pro to unlock';
-                upgradeMessageEl.style.display = 'block';
-                topicSelectEl.value = ''; // Reset selection
-            }
-        }
+// Handle topic change
+function handleTopicChange() {
+    const selectedTopic = topicSelectEl.value;
+    const selectedOption = topicSelectEl.options[topicSelectEl.selectedIndex];
+    
+    // Reset upgrade message
+    upgradeMessageEl.style.display = 'none';
+    
+    // Check if selected option is blurred
+    if (selectedOption && selectedOption.classList.contains('blurred-option')) {
+        upgradeMessageEl.textContent = 'Upgrade to Pro to unlock';
+        upgradeMessageEl.style.display = 'block';
+        topicSelectEl.value = ''; // Reset selection
+    }
+}
 
-        // Start the quiz
-        function startQuiz() {
-            const selectedTopic = topicSelectEl.value;
-            
-            if (!selectedTopic) {
-                alert('Please select a topic first!');
-                return;
-            }
-            
-            // Load questions for selected topic
-            questions = getRandomQuestions(selectedTopic, 10);
-            
-            if (questions.length === 0) {
-                alert('No questions available for this topic!');
-                return;
-            }
-            
-            // Hide topic selection and show quiz
-            topicSelectionEl.style.display = 'none';
-            quizContainerEl.style.display = 'block';
-            
-            // Reset quiz state
-            currentQuestionIndex = 0;
-            score = 0;
-            answeredQuestions = 0;
-            totalTimeUsed = 0;
-            startTime = new Date();
-            
-            // Load first question
-            loadQuestion();
-        }
+// Start the quiz
+function startQuiz() {
+    const selectedTopic = topicSelectEl.value;
+    
+    if (!selectedTopic) {
+        alert('Please select a topic first!');
+        return;
+    }
+    
+    // Load questions for selected topic
+    questions = getRandomQuestions(selectedTopic, 10);
+    
+    if (questions.length === 0) {
+        alert('No questions available for this topic!');
+        return;
+    }
+    
+    // Hide topic selection and show quiz
+    topicSelectionEl.style.display = 'none';
+    quizContainerEl.style.display = 'block';
+    
+    // Reset quiz state
+    currentQuestionIndex = 0;
+    score = 0;
+    answeredQuestions = 0;
+    totalTimeUsed = 0;
+    startTime = new Date();
+    
+    // Load first question
+    loadQuestion();
+}
 
-        // Get random questions from the bank
-        function getRandomQuestions(topic, count) {
-            if (!questionsBank[topic] || questionsBank[topic].length === 0) {
-                return [];
-            }
-            
-            const topicQuestions = [...questionsBank[topic]];
-            const selectedQuestions = [];
-            
-            // Ensure we don't try to get more questions than are available
-            count = Math.min(count, topicQuestions.length);
-            
-            for (let i = 0; i < count; i++) {
-                const randomIndex = Math.floor(Math.random() * topicQuestions.length);
-                selectedQuestions.push(topicQuestions.splice(randomIndex, 1)[0]);
-            }
-            
-            return selectedQuestions;
-        }
+// Get random questions from the bank
+function getRandomQuestions(topic, count) {
+    if (!questionsBank[topic] || questionsBank[topic].length === 0) {
+        return [];
+    }
+    
+    const topicQuestions = [...questionsBank[topic]];
+    const selectedQuestions = [];
+    
+    // Ensure we don't try to get more questions than are available
+    count = Math.min(count, topicQuestions.length);
+    
+    for (let i = 0; i < count; i++) {
+        const randomIndex = Math.floor(Math.random() * topicQuestions.length);
+        selectedQuestions.push(topicQuestions.splice(randomIndex, 1)[0]);
+    }
+    
+    return selectedQuestions;
+}
 
-        // Load a question
-        function loadQuestion() {
-            if (currentQuestionIndex >= questions.length) {
-                endQuiz();
-                return;
-            }
-            
-            const question = questions[currentQuestionIndex];
-            
-            // Update question counter
-            questionCounterEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
-            
-            // Load question text
-            questionEl.textContent = question.question;
-            
-            // Clear options and feedback
-            optionsEl.innerHTML = '';
-            feedbackEl.innerHTML = '';
-            feedbackEl.className = 'feedback';
-            
-            // Add options
-            question.options.forEach((option, index) => {
-                const li = document.createElement('li');
-                li.textContent = option;
-                li.className = 'option';
-                li.setAttribute('data-index', index);
-                li.addEventListener('click', () => selectAnswer(index));
-                optionsEl.appendChild(li);
-            });
-            
-            // Reset and start timer
-            timeLeft = 60;
-            timerProgressEl.style.width = '100%';
+// Load a question
+function loadQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+        endQuiz();
+        return;
+    }
+    
+    const question = questions[currentQuestionIndex];
+    
+    // Update question counter
+    questionCounterEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+    
+    // Load question text
+    questionEl.textContent = question.question;
+    
+    // Clear options and feedback
+    optionsEl.innerHTML = '';
+    feedbackEl.innerHTML = '';
+    feedbackEl.className = 'feedback';
+    
+    // Add options
+    question.options.forEach((option, index) => {
+        const li = document.createElement('li');
+        li.textContent = option;
+        li.className = 'option';
+        li.setAttribute('data-index', index);
+        li.addEventListener('click', () => selectAnswer(index));
+        optionsEl.appendChild(li);
+    });
+    
+    // Reset and start timer - Changed from 60 to 15 seconds
+    timeLeft = 15;
+    timerProgressEl.style.width = '100%';
+    clearInterval(timer);
+    startTimer();
+}
+
+// Start the timer
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        
+        // Update timer bar - Changed calculation to be based on 15 seconds
+        const percentage = (timeLeft / 15) * 100;
+        timerProgressEl.style.width = `${percentage}%`;
+        
+        if (timeLeft <= 0) {
             clearInterval(timer);
-            startTimer();
+            handleTimeUp();
         }
+    }, 1000);
+}
 
-        // Start the timer
-        function startTimer() {
-            timer = setInterval(() => {
-                timeLeft--;
-                
-                // Update timer bar
-                const percentage = (timeLeft / 60) * 100;
-                timerProgressEl.style.width = `${percentage}%`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    handleTimeUp();
-                }
-            }, 1000);
+// Handle time up
+function handleTimeUp() {
+    // Mark question as timed out
+    feedbackEl.textContent = "Time's up! Moving to next question...";
+    feedbackEl.className = 'feedback incorrect-feedback';
+    
+    // Disable all options
+    const options = document.querySelectorAll('.option');
+    const question = questions[currentQuestionIndex];
+    const correctIndex = question.correctAnswer ?? question.answer;
+    
+    options.forEach(option => {
+        option.style.pointerEvents = 'none';
+        
+        // Highlight correct answer
+        if (parseInt(option.getAttribute('data-index')) === correctIndex) {
+            option.classList.add('correct');
         }
-
-        // Handle time up
-        function handleTimeUp() {
-            // Mark question as timed out
-            feedbackEl.textContent = "Time's up! Moving to next question...";
-            feedbackEl.className = 'feedback incorrect-feedback';
-            
-            // Disable all options
-            const options = document.querySelectorAll('.option');
-            const question = questions[currentQuestionIndex];
-            const correctIndex = question.correctAnswer ?? question.answer;
-            
-            options.forEach(option => {
-                option.style.pointerEvents = 'none';
-                
-                // Highlight correct answer
-                if (parseInt(option.getAttribute('data-index')) === correctIndex) {
-                    option.classList.add('correct');
-                }
-            });
-            
-            // Record time used
-            totalTimeUsed += 60;
-            answeredQuestions++;
-            
-            // Store answer with correct answer for timed out questions
-            userAnswers.push({
-                question: question.question,
-                userAnswer: "Time's up",
-                correctAnswer: question.options[correctIndex],
-                isCorrect: false
-            });
-            // Move to next question after 2 seconds
-setTimeout(nextQuestion, 2000);
+    });
+    
+    // Record time used - Changed from 60 to 15 seconds
+    totalTimeUsed += 15;
+    answeredQuestions++;
+    
+    // Store answer with correct answer for timed out questions
+    userAnswers.push({
+        question: question.question,
+        userAnswer: "Time's up",
+        correctAnswer: question.options[correctIndex],
+        isCorrect: false
+    });
+    // Move to next question after 2 seconds
+    setTimeout(nextQuestion, 2000);
 }
 
 function selectAnswer(index) {
@@ -888,8 +888,8 @@ function selectAnswer(index) {
     const correctIndex = questions[currentQuestionIndex].correctAnswer ?? questions[currentQuestionIndex].answer;
     const isCorrect = index === correctIndex;
     
-    // Record time used
-    const timeUsed = 60 - timeLeft;
+    // Record time used - Changed from 60 to 15 seconds
+    const timeUsed = 15 - timeLeft;
     totalTimeUsed += timeUsed;
     answeredQuestions++;
     
