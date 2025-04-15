@@ -3,111 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mathematics Quiz</title>
+    <title>Gambia Quiz Speed Test</title>
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
+            --primary-color: #3B7A57; /* Gambian green */
+            --secondary-color: #4d9769;
+            --accent-color: #ce1126; /* Gambian red */
+            --correct-color: #4caf50;
+            --incorrect-color: #f44336;
+            --timer-bg: #e0e0e0;
+            --white: #ffffff;
+            --dark: #333333;
+            --gray: #808080;
+            --light-gray: #f5f5f5;
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f5f7fa;
-            color: var(--dark-color);
+            background-color: var(--light-gray);
+            color: var(--dark);
             line-height: 1.6;
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px 0;
-            border-radius: 8px 8px 0 0;
             text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
 
         h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .content {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
         }
 
         .topic-selection {
-            margin-bottom: 30px;
-            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
         }
 
         select {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
             width: 100%;
-            max-width: 400px;
-            background-color: white;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--white);
             cursor: pointer;
-            transition: all 0.3s;
         }
 
-        select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
-        }
-        
         .btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 20px;
             display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
             background-color: var(--secondary-color);
         }
 
-        #quiz-container {
+        .btn-start {
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .quiz-container {
             display: none;
         }
 
         .question-container {
-            margin-bottom: 30px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-container {
+            margin-bottom: 1rem;
+        }
+
+        .timer-bar {
+            height: 10px;
+            width: 100%;
+            background-color: var(--timer-bg);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .timer-progress {
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary-color);
+            transition: width 1s linear;
         }
 
         .question {
+            margin-bottom: 1rem;
             font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+            font-weight: bold;
         }
 
         .options {
@@ -115,192 +132,159 @@
         }
 
         .option {
-            padding: 10px 15px;
-            margin: 8px 0;
-            background-color: var(--light-color);
-            border-radius: 4px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--light-gray);
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s ease;
         }
 
         .option:hover {
-            background-color: #d6dbdf;
+            background-color: #e8e8e8;
         }
 
-        .option.selected {
-            background-color: var(--primary-color);
-            color: white;
+        .option.correct {
+            background-color: var(--correct-color);
+            color: var(--white);
         }
 
-        #results-container {
+        .option.incorrect {
+            background-color: var(--incorrect-color);
+            color: var(--white);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .correct-feedback {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--correct-color);
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--incorrect-color);
+        }
+
+        .question-counter {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .results {
             display: none;
             text-align: center;
-            margin-top: 30px;
-        }
-
-        .result-info {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
         }
 
         .score {
             font-size: 2rem;
             font-weight: bold;
+            margin-bottom: 1rem;
             color: var(--primary-color);
-            margin: 20px 0;
         }
 
-        .pro-upgrade {
-            background-color: rgba(0, 0, 0, 0.7);
+        .restart-btn {
+            margin-top: 1rem;
+        }
+
+        .blurred-option {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .upgrade-message {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: rgba(206, 17, 38, 0.2);
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ce1126;
+        }
+
+        /* Add styles for popup ad */
+        .popup-ad {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            text-align: center;
+            z-index: 9999;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            display: none;
         }
 
-        .pro-upgrade-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
+        .popup-content {
+            width: 100%;
             max-width: 400px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 0 auto;
         }
 
-        .pro-upgrade h2 {
-            color: var(--accent-color);
-            margin-bottom: 20px;
-        }
-
-        .pro-upgrade p {
-            margin-bottom: 20px;
-        }
-
-        .close-btn {
-            background-color: var(--accent-color);
+        .popup-ad h3 {
             color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .close-btn:hover {
-            background-color: #c0392b;
-        }
-
-        .disabled-option {
-            opacity: 0.6;
-            filter: blur(0.5px);
-            pointer-events: none;
-        }
-
-        .progress-container {
+            font-size: 24px;
             margin: 20px 0;
-            text-align: center;
         }
 
-        .progress-bar {
-            height: 10px;
-            background-color: #eee;
+        .popup-ad p {
+            color: white;
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .popup-ad .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #3B7A57;
+            color: white;
+            font-weight: bold;
             border-radius: 5px;
-            margin: 10px 0;
-            overflow: hidden;
+            margin: 20px 0;
+            font-size: 18px;
+            width: 80%;
+            max-width: 300px;
         }
 
-        .progress {
-            height: 100%;
-            background-color: var(--primary-color);
-            width: 0%;
-            transition: width 0.3s ease;
+        .popup-ad .countdown {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ffc107;
+            font-size: 16px;
         }
-        .popup-ad {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
-    color: white;
-    text-align: center;
-    z-index: 9999;
-    text-decoration: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-.popup-content {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    margin: 0 auto;
-}
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
 
-.popup-ad h3 {
-    color: white;
-    font-size: 24px;
-    margin: 20px 0;
-}
-
-.popup-ad p {
-    color: white;
-    font-size: 18px;
-    margin: 15px 0;
-}
-
-.popup-ad .cta-button {
-    display: inline-block;
-    padding: 15px 30px;
-    background: #ff9800;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    margin: 20px 0;
-    font-size: 18px;
-    width: 80%;
-    max-width: 300px;
-}
-
-.popup-ad .countdown {
-    margin-top: 20px;
-    font-weight: bold;
-    color: #ffc107;
-    font-size: 16px;
-}
-
-.close-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 5px;
-}
-
-.popup-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-.share-container {
+        /* Add styles for share functionality */
+        .share-container {
             background-color: #f4f4f4;
             border-radius: 8px;
             padding: 20px;
@@ -349,6 +333,7 @@
             margin-bottom: 15px;
         }
 
+        /* Add styles for answers summary */
         .answers-section {
             margin: 20px 0;
             padding: 15px;
@@ -379,518 +364,679 @@
             border-radius: 4px;
             background-color: white;
         }
+
+        .gambia-flag {
+            width: 60px;
+            height: 40px;
+            display: inline-block;
+            margin: 0 10px;
+            background: linear-gradient(to bottom, #ce1126 30%, #ffffff 30%, #ffffff 70%, #3B7A57 70%);
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Mathematics Quiz</h1>
-            <p>Test your knowledge in various mathematics topics</p>
+            <h1>Gambia Quiz Speed Test <span class="gambia-flag"></span></h1>
+            <p>Test your knowledge about The Gambia with this timed quiz!</p>
         </header>
 
-        <div class="content">
-            <div class="topic-selection" id="topic-selection">
-                <h2>Select a Topic</h2>
-                <p>Choose a mathematics topic to start your 10-question quiz</p>
-                <select id="topic-dropdown">
-                    <option value="" disabled selected>-- Select a Topic --</option>
-                    <option value="algebra">Algebra</option>
-                    <option value="geometry">Geometry</option>
-                    <option value="calculus">Calculus</option>
-                    <option value="statistics" class="pro-only">Statistics (Pro Only)</option>
-                    <option value="trigonometry" class="pro-only">Trigonometry (Pro Only)</option>
-                    <option value="number-theory" class="pro-only">Number Theory (Pro Only)</option>
-                    <option value="discrete-math" class="pro-only">Discrete Mathematics (Pro Only)</option>
-                    <option value="linear-algebra" class="pro-only">Linear Algebra (Pro Only)</option>
-                </select>
-                <button id="start-btn" class="btn">Start Quiz</button>
-            </div>
+        <div class="topic-selection" id="topicSelection">
+            <label for="topic">Select a Topic:</label>
+            <select id="topic">
+                <option value="">-- Select a topic --</option>
+                <option value="history">Gambian History</option>
+                <option value="culture">Culture & Traditions</option>
+                <option value="geography">Geography & Environment</option>
+                <option value="politics" class="blurred-option">Politics & Government</option>
+                <option value="cuisine" class="blurred-option">Gambian Cuisine</option>
+                <option value="tourism" class="blurred-option">Tourism & Travel</option>
+                <option value="sports" class="blurred-option">Sports & Entertainment</option>
+            </select>
+            <button id="startBtn" class="btn btn-start">Start Quiz</button>
+            <div id="upgradeMessage" class="upgrade-message">UPGRADE TO PRO</div>
+        </div>
 
-            <div id="quiz-container">
-                <div class="progress-container">
-                    <p id="progress-text">Question 1 of 10</p>
-                    <div class="progress-bar">
-                        <div class="progress" id="progress"></div>
-                    </div>
+        <div id="quizContainer" class="quiz-container">
+            <div class="question-counter" id="questionCounter">Question 1 of 10</div>
+            <div class="timer-container">
+                <div class="timer-bar">
+                    <div class="timer-progress" id="timerProgress"></div>
                 </div>
-                <div id="question-display"></div>
-                <button id="submit-btn" class="btn">Submit Answer</button>
-                <button id="next-btn" class="btn" style="display: none;">Next Question</button>
             </div>
+            <div class="question-container">
+                <div class="question" id="question"></div>
+                <ul class="options" id="options"></ul>
+                <div class="feedback" id="feedback"></div>
+            </div>
+        </div>
 
-            <div id="results-container">
-                <h2>Quiz Results</h2>
-                <div class="result-info">You've completed the quiz!</div>
-                <div class="score">Your score: <span id="score">0</span>/10</div>
+        <div id="results" class="results">
+            <h2>Quiz Completed!</h2>
+            <p>Your score:</p>
+            <div class="score" id="score">**</div>
+            
+            <div class="share-container">
+                <h3>Share and Unlock Full Score!</h3>
+                <p class="share-instructions">Share the quiz with friends to reveal your complete results!</p>
                 
-                <div class="share-container">
-                    <h3>Share and Unlock Full Score!</h3>
-                    <p class="share-instructions">Share the quiz with friends to reveal your complete results!</p>
-                    
-                    <div class="share-progress">
-                        <div class="share-progress-bar" id="share-progress-bar"></div>
-                    </div>
-                    
-                    <p id="share-count-text">Shares: 0/5</p>
-                    
-                    <button id="telegram-share-btn" class="telegram-share-btn">
-                        Share on Telegram
-                    </button>
-                    
-                    <button id="reveal-score-btn" class="btn" disabled>
-                        Reveal Full Score
-                    </button>
+                <div class="share-progress">
+                    <div class="share-progress-bar" id="share-progress-bar"></div>
                 </div>
                 
-                <div id="answers-summary" style="display: none;">
-                    <h3>Your Answers Summary</h3>
-                    <div id="correct-answers" class="answers-section">
-                        <h4>Correct Answers: <span id="correct-count">0</span></h4>
-                        <ul id="correct-list"></ul>
-                    </div>
-                    <div id="wrong-answers" class="answers-section">
-                        <h4>Incorrect Answers: <span id="wrong-count">0</span></h4>
-                        <ul id="wrong-list"></ul>
-                    </div>
-                </div>
+                <p id="share-count-text">Shares: 0/5</p>
                 
-                <button id="restart-btn" class="btn" style="display: none;">Try Another Topic</button>
+                <button id="telegram-share-btn" class="telegram-share-btn">
+                    Share on Telegram
+                </button>
+                
+                <button id="reveal-score-btn" class="btn" disabled>
+                    Reveal Full Score
+                </button>
             </div>
+            
+            <div id="answers-summary" style="display: none;">
+                <h3>Your Answers Summary</h3>
+                <div id="correct-answers" class="answers-section">
+                    <h4>Correct Answers: <span id="correct-count">0</span></h4>
+                    <ul id="correct-list"></ul>
+                </div>
+                <div id="wrong-answers" class="answers-section">
+                    <h4>Incorrect Answers: <span id="wrong-count">0</span></h4>
+                    <ul id="wrong-list"></ul>
+                </div>
+            </div>
+            
+            <p id="timeStats"></p>
+            <button id="restartBtn" class="btn restart-btn" style="display: none;">Take Another Quiz</button>
         </div>
     </div>
 
-    <div class="pro-upgrade" id="pro-upgrade">
-        <div class="pro-upgrade-content">
-            <h2>UPGRADE TO PRO</h2>
-            <p>This topic is only available in the PRO version.</p>
-            <p>Upgrade today to access all mathematics topics and thousands of premium questions!</p>
-            <button class="close-btn" id="close-pro-modal">Maybe Later</button>
+    <!-- Add popup ad HTML -->
+    <a id="popupAd" class="popup-ad" href="https://gambiaquiz.com/pro" target="_blank">
+        <button class="close-button" onclick="closePopup(event)">✕</button>
+        <div class="popup-content">
+            <h3>🚀 Upgrade to Gambia Quiz Pro!</h3>
+            <p><strong>Unlock More Features:</strong> Get access to all Gambia Quiz Topics, advanced analytics, and exclusive rewards!</p>
+            <p>Join the Pro Version now and become a Gambia expert! 🚀</p>    
+            <div class="cta-button">
+                CLICK HERE TO UPGRADE
+            </div>
+            <p id="countdown" class="countdown">Click X at the top right to close this Popup</p>
         </div>
-    </div>
-<a id="popupAd" class="popup-ad" href="https://yourquizsite.com/pro" target="_blank">
-    <button class="close-button" onclick="closePopup(event)">✕</button>
-    <div class="popup-content">
-        <h3>🚀 Upgrade to Quiz Pro!</h3>
-        <img class="popup-image" src="https://yourquizsite.com/pro-image.jpg" alt="Quiz Pro">
-        <p><strong>Unlock More Features:</strong> Get access to premium quizzes, advanced analytics, and exclusive rewards!</p>
-        <p>Join the Pro Version now and take your learning to the next level! 🚀</p>    
-        <div class="cta-button">
-            CLICK HERE TO UPGRADE
-        </div>
-        <p id="countdown" class="countdown">Closing in 5s</p>
-    </div>
-</a>
+    </a>
+
     <script>
-        // DOM Elements
-        const topicSelection = document.getElementById('topic-selection');
-        const quizContainer = document.getElementById('quiz-container');
-        const resultsContainer = document.getElementById('results-container');
-        const topicDropdown = document.getElementById('topic-dropdown');
-        const startBtn = document.getElementById('start-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const questionDisplay = document.getElementById('question-display');
-        const scoreSpan = document.getElementById('score');
-        const proUpgrade = document.getElementById('pro-upgrade');
-        const closeProModal = document.getElementById('close-pro-modal');
-        const progressText = document.getElementById('progress-text');
-        const progressBar = document.getElementById('progress');
+        // DOM elements
+        const topicSelectionEl = document.getElementById('topicSelection');
+        const topicSelectEl = document.getElementById('topic');
+        const startBtn = document.getElementById('startBtn');
+        const upgradeMessageEl = document.getElementById('upgradeMessage');
+        const quizContainerEl = document.getElementById('quizContainer');
+        const questionCounterEl = document.getElementById('questionCounter');
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const feedbackEl = document.getElementById('feedback');
+        const timerProgressEl = document.getElementById('timerProgress');
+        const resultsEl = document.getElementById('results');
+        const scoreEl = document.getElementById('score');
+        const timeStatsEl = document.getElementById('timeStats');
+        const restartBtn = document.getElementById('restartBtn');
 
-        // Question Banks (to be filled manually later)
-        const questionBanks = {
-    algebra: [
-        {
-            question: "What is the solution to the equation 3x + 7 = 22?",
-            options: ["x = 5", "x = 6", "x = 7", "x = 8"],
-            answer: 0
-        },
-        {
-            question: "Which of the following is the factored form of x² - 9?",
-            options: ["(x - 3)(x + 3)", "(x - 9)(x + 1)", "(x - 3)²", "(x + 3)²"],
-            answer: 0
-        },
-        {
-            question: "What is the slope of the line represented by the equation 4x + 2y = 8?",
-            options: ["-2", "2", "-4", "4"],
-            answer: 0
-        },
-        {
-            question: "Solve for x in the system: 2x + y = 5 and x - y = 1",
-            options: ["x = 2", "x = 3", "x = 1.5", "x = 4"],
-            answer: 0
-        },
-        {
-            question: "Which expression is equivalent to (2x - 3)(x + 4)?",
-            options: ["2x² + 5x - 12", "2x² + 8x - 12", "2x² - 3x - 12", "2x² + 5x - 3"],
-            answer: 1
-        },
-                {
-            question: "What is the value of x in the equation 5x + 2 = 17?",
-            options: ["x = 3", "x = 5", "x = 7", "x = 10"],
-            answer: 1
-        },
-        {
-            question: "Which of the following represents the quadratic formula?",
-            options: ["x = (-b ± √(b² - 4ac)) / 2a", "x = (-b ± √(4ac - b²)) / 2a", "x = (b ± √(b² - 4ac)) / 2a", "x = (-b ± √(b² + 4ac)) / 2a"],
-            answer: 0
-        },
-        {
-            question: "Simplify: (3x - 2) + (5x + 4)",
-            options: ["8x + 2", "8x - 6", "2x + 2", "15x - 2"],
-            answer: 0
-        },
-        {
-            question: "What is the solution to 2(x - 4) = 10?",
-            options: ["x = 2", "x = 7", "x = 9", "x = 6"],
-            answer: 1
-        },
-        {
-            question: "Which of the following is an identity?",
-            options: ["2x + 3 = 5", "x² - 4 = (x - 2)(x + 2)", "3x - 7 = 2x + 1", "5x + 2 = 0"],
-            answer: 1
-        },
-        {
-            question: "Factorize: x² - 4x - 12",
-            options: ["(x - 6)(x + 2)", "(x - 4)(x - 3)", "(x + 6)(x - 2)", "(x + 4)(x - 3)"],
-            answer: 0
-        },
-        {
-            question: "Solve for x: x² = 49",
-            options: ["x = 49", "x = 7", "x = ±7", "x = -7"],
-            answer: 2
-        },
-        {
-            question: "What is the slope of the line y = 4x - 7?",
-            options: ["4", "-7", "-4", "7"],
-            answer: 0
-        },
-        {
-            question: "Which of the following is a linear equation?",
-            options: ["y = 3x² + 2x", "y = 2x + 5", "y = x³ - x", "y = 4/x"],
-            answer: 1
-        },
-        {
-            question: "Solve for x: 3(x - 2) = 2(x + 1)",
-            options: ["x = 5", "x = 6", "x = 7", "x = 8"],
-            answer: 0
-        },
-        {
-            question: "Which of the following equations represents a parabola?",
-            options: ["y = 2x + 3", "y = x² - 5x + 6", "y = 3x - 1", "y = 5x + 4"],
-            answer: 1
-        },
-        {
-            question: "If f(x) = 2x² - 3x + 5, find f(2).",
-            options: ["5", "7", "9", "11"],
-            answer: 3
-        },
-        {
-            question: "What is the inverse of the function f(x) = 3x - 4?",
-            options: ["f⁻¹(x) = (x + 4)/3", "f⁻¹(x) = (x - 4)/3", "f⁻¹(x) = 3(x + 4)", "f⁻¹(x) = 3(x - 4)"],
-            answer: 0
-        },
-        {
-            question: "Find the product of (x - 5)(x + 3).",
-            options: ["x² - 2x - 15", "x² + 8x - 15", "x² - 8x + 15", "x² - 3x - 15"],
-            answer: 0
-        },
-        {
-            question: "Solve for x: log₂(x) = 3",
-            options: ["x = 6", "x = 8", "x = 9", "x = 12"],
-            answer: 1
-        },
-        {
-            question: "Which of the following is an example of a rational function?",
-            options: ["y = 3x² - 2x", "y = (x + 2)/(x - 3)", "y = x³ + 4", "y = 2x - 5"],
-            answer: 1
-        },
-        {
-            question: "Find the y-intercept of the equation 2x - 3y = 6.",
-            options: ["y = -2", "y = -3", "y = 3", "y = 2"],
-            answer: 2
-        },
-        {
-            question: "What is the degree of the polynomial 4x⁵ - 3x³ + 2x - 7?",
-            options: ["1", "3", "5", "7"],
-            answer: 2
-        },
-        {
-            question: "What is the sum of the roots of the equation x² - 7x + 10 = 0?",
-            options: ["10", "7", "5", "-7"],
-            answer: 1
-        }
-
-    ],
-    
-    geometry: [
-        {
-            question: "What is the area of a circle with radius 6 cm?",
-            options: ["12π cm²", "36π cm²", "6π cm²", "18π cm²"],
-            answer: 1
-        },
-        {
-            question: "If two angles in a triangle measure 30° and 45°, what is the measure of the third angle?",
-            options: ["105°", "90°", "75°", "115°"],
-            answer: 0
-        },
-        {
-            question: "What is the formula for the volume of a sphere?",
-            options: ["4/3πr³", "4πr²", "πr²h", "2πr"],
-            answer: 0
-        },
-        {
-            question: "In a right triangle, if one leg is 8 units and the hypotenuse is 17 units, what is the length of the other leg?",
-            options: ["15 units", "9 units", "16 units", "12 units"],
-            answer: 0
-        },
-        {
-            question: "What is the sum of interior angles in a hexagon?",
-            options: ["540°", "720°", "360°", "900°"],
-            answer: 1
-        }
-    ],
-    
-    calculus: [
-        {
-            question: "What is the derivative of f(x) = x³?",
-            options: ["f'(x) = 3x²", "f'(x) = 3x", "f'(x) = x²", "f'(x) = 3"],
-            answer: 0
-        },
-        {
-            question: "What is the integral of f(x) = 2x?",
-            options: ["F(x) = x² + C", "F(x) = 2x² + C", "F(x) = x² - C", "F(x) = x + C"],
-            answer: 0
-        },
-        {
-            question: "What is the derivative of sin(x)?",
-            options: ["cos(x)", "-sin(x)", "tan(x)", "-cos(x)"],
-            answer: 0
-        },
-        {
-            question: "Using the chain rule, what is the derivative of f(x) = (2x + 1)⁵?",
-            options: ["f'(x) = 10(2x + 1)⁴", "f'(x) = 5(2x + 1)⁴", "f'(x) = 10(2x + 1)³", "f'(x) = 5(2x + 1)²"],
-            answer: 1
-        },
-        {
-            question: "What does L'Hôpital's rule help determine?",
-            options: ["Limits of indeterminate forms", "Definite integrals", "Derivatives of logarithmic functions", "Solutions to differential equations"],
-            answer: 0
-        }
-    ]
-};
-
-        let currentQuestions = [];
+        // Quiz state
         let currentQuestionIndex = 0;
         let score = 0;
-        let selectedOption = null;
+        let timer;
+        let timeLeft = 60;
+        let questions = [];
+        let startTime, endTime;
+        let answeredQuestions = 0;
+        let totalTimeUsed = 0;
         let userAnswers = [];
+        let quizScore = 0;
+        let shareCount = 0;
 
-        // Helper Functions
-        function getRandomQuestions(topic, count) {
-            // Check if we have enough questions in the bank
-            if (questionBanks[topic].length < count) {
-                return [...questionBanks[topic]]; // Return all available questions
-            }
-            
-            // Shuffle and get random questions
-            return shuffleArray([...questionBanks[topic]]).slice(0, count);
-        }
+        // Additional DOM elements for new functionality
+        const telegramShareBtn = document.getElementById('telegram-share-btn');
+        const revealScoreBtn = document.getElementById('reveal-score-btn');
+        const shareProgressBar = document.getElementById('share-progress-bar');
+        const shareCountText = document.getElementById('share-count-text');
+        const answersSummary = document.getElementById('answers-summary');
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+        // Questions bank
+        const questionsBank = {
+            history: [
+                {
+                    question: "In what year did The Gambia gain independence from British colonial rule?",
+                    options: ["1965", "1975", "1960", "1970"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Who was the first president of The Gambia?",
+                    options: ["Dawda Jawara", "Yahya Jammeh", "Adama Barrow", "Bakary Dabo"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What was the name of the political union between Senegal and The Gambia that existed from 1982 to 1989?",
+                    options: ["Senegambia Confederation", "Gambia-Senegal Alliance", "West African Union", "Senegambia Republic"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which former Gambian president came to power through a military coup in 1994?",
+                    options: ["Yahya Jammeh", "Dawda Jawara", "Adama Barrow", "Ousainou Darboe"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What was the former name of Banjul, the capital city of The Gambia?",
+                    options: ["Bathurst", "Georgetown", "St. Mary's", "Albion"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which European explorer is credited with 'discovering' the Gambia River in the 15th century?",
+                    options: ["Prince Henry the Navigator", "Christopher Columbus", "Vasco da Gama", "Ferdinand Magellan"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which slave fort is located at the mouth of the Gambia River and played a significant role in the Atlantic slave trade?",
+                    options: ["James Island (Kunta Kinteh Island)", "Goree Island", "Cape Coast Castle", "Elmina Castle"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "In what year did Adama Barrow become president of The Gambia?",
+                    options: ["2017", "2015", "2019", "2012"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "The Gambia River has been an important trading route for centuries. Which product was NOT historically traded along this river?",
+                    options: ["Coffee", "Gold", "Ivory", "Slaves"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which military and political alliance helped ensure peaceful transition of power after the 2016 Gambian election crisis?",
+                    options: ["ECOWAS", "African Union", "United Nations", "Commonwealth"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What famous American author wrote 'Roots', tracing his ancestry to The Gambia?",
+                    options: ["Alex Haley", "James Baldwin", "Toni Morrison", "Maya Angelou"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which colonial power briefly controlled parts of The Gambia before British dominance?",
+                    options: ["Portugal", "France", "Netherlands", "Spain"],
+                    correctAnswer: 0
+                }
+            ],
+            culture: [
+                {
+                    question: "What is the dominant religion in The Gambia?",
+                    options: ["Islam", "Christianity", "Traditional African Religions", "Buddhism"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which of these is a traditional Gambian musical instrument?",
+                    options: ["Kora", "Sitar", "Accordion", "Bagpipes"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the name of the traditional Gambian wrestling that combines wrestling with mystical rituals?",
+                    options: ["Boreh", "Lutte", "Mma", "Capoeira"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which ethnic group is the largest in The Gambia?",
+                    options: ["Mandinka", "Fula", "Wolof", "Jola"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What colorful outfit is typically worn by Gambian women?",
+                    options: ["Complet", "Sari", "Kimono", "Dirndl"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which of these is a traditional Gambian ceremonial dance?",
+                    options: ["Kankurang", "Samba", "Tango", "Hula"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the traditional greeting in Mandinka?",
+                    options: ["I be jama?", "Jambo", "Salaam", "Hola"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which traditional Gambian practice involves female storytellers who preserve oral history?",
+                    options: ["Griots", "Sangomas", "Oracles", "Nyakures"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is a common traditional musical genre in The Gambia?",
+                    options: ["Mbalax", "Reggae", "Samba", "K-Pop"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which traditional craft is The Gambia particularly known for?",
+                    options: ["Tie-dye textiles", "Pottery", "Glassblowing", "Metalwork"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is 'attaya', an important social ritual in Gambian culture?",
+                    options: ["Tea ceremony", "Wedding dance", "Harvest festival", "New year celebration"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which famous Gambian musician gained international recognition for his kora playing?",
+                    options: ["Jaliba Kuyateh", "Youssou N'Dour", "Alpha Blondy", "Baaba Maal"],
+                    correctAnswer: 0
+                }
+            ],
+            geography: [
+                {
+                    question: "What is the capital city of The Gambia?",
+                    options: ["Banjul", "Serekunda", "Brikama", "Bakau"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which country completely surrounds The Gambia except for its coastline?",
+                    options: ["Senegal", "Mali", "Guinea-Bissau", "Sierra Leone"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the length of The Gambia from east to west?",
+                    options: ["About 400 km", "About 600 km", "About 200 km", "About 800 km"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which body of water borders The Gambia to the west?",
+                    options: ["Atlantic Ocean", "Mediterranean Sea", "Indian Ocean", "Lake Volta"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the main river that runs through The Gambia?",
+                    options: ["Gambia River", "Senegal River", "Niger River", "Volta River"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which of these is NOT one of the administrative divisions of The Gambia?",
+                    options: ["Tambacounda", "North Bank", "West Coast", "Central River"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the approximate population of The Gambia as of 2023?",
+                    options: ["2.5 million", "10 million", "5 million", "800,000"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which of these is a popular tourist beach area in The Gambia?",
+                    options: ["Kotu", "Dakar", "Accra", "Monrovia"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the highest point in The Gambia?",
+                    options: ["Red Rock (53m)", "Mount Gambia (150m)", "Banjul Peak (90m)", "Senegal Hill (200m)"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which of these is a UNESCO World Heritage site in The Gambia?",
+                    options: ["Kunta Kinteh Island", "Banjul Cathedral", "National Museum", "Abuko Nature Reserve"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the most widely spoken indigenous language in The Gambia?",
+                    options: ["Mandinka", "Wolof", "Fula", "Jola"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the climate type of The Gambia?",
+                    options: ["Tropical savanna", "Mediterranean", "Desert", "Humid subtropical"],
+                    correctAnswer: 0
+                }
+            ]
+        };
 
-        function displayQuestion() {
-            const question = currentQuestions[currentQuestionIndex];
-            const options = shuffleArray([...question.options]);
+        // Initialize the quiz
+        function init() {
+            // Event listeners
+            startBtn.addEventListener('click', startQuiz);
+            restartBtn.addEventListener('click', restartQuiz);
+            topicSelectEl.addEventListener('change', handleTopicChange);
             
-            let questionHTML = `
-                <div class="question-container">
-                    <div class="question">${currentQuestionIndex + 1}. ${question.question}</div>
-                    <ul class="options">
-            `;
-            
-            options.forEach((option, index) => {
-                questionHTML += `
-                    <li class="option" data-index="${index}">${option}</li>
-                `;
-            });
-            
-            questionHTML += `
-                    </ul>
-                </div>
-            `;
-            
-            questionDisplay.innerHTML = questionHTML;
-            
-            // Update progress
-            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
-            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
-            
-            // Add click event listeners to options
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    document.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    
-                    // Store selected option
-                    selectedOption = options[this.dataset.index];
+            // Disable blurred options
+            const blurredOptions = document.querySelectorAll('.blurred-option');
+            blurredOptions.forEach(option => {
+                option.disabled = true;
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    upgradeMessageEl.textContent = 'Upgrade to Pro to unlock';
+                    upgradeMessageEl.style.display = 'block';
+                    topicSelectEl.value = '';
                 });
             });
             
-            // Hide next button and show submit button
-            submitBtn.style.display = 'inline-block';
-            nextBtn.style.display = 'none';
+            // Add event listeners for share functionality
+            if (telegramShareBtn && revealScoreBtn) {
+                telegramShareBtn.addEventListener('click', handleShare);
+                revealScoreBtn.addEventListener('click', revealFullScore);
+            }
             
-            // Reset selected option
-            selectedOption = null;
+            // Add popup event listeners
+            document.querySelector('.close-button').addEventListener('click', closePopup);
+            
+            // Show pop-up every 55 seconds
+            setInterval(showPopup, 55000);
         }
 
-       function checkAnswer() {
-    if (selectedOption === null) {
-        alert('Please select an option');
-        return;
-    }
-    
-    const question = currentQuestions[currentQuestionIndex];
-    const correctOptionText = question.options[question.answer];
-    
-    // Store user's answer without showing if it's correct or wrong
-    userAnswers.push({
-        question: question.question,
-        userAnswer: selectedOption,
-        correctAnswer: correctOptionText,
-        isCorrect: selectedOption === correctOptionText
-    });
-    
-    // If selected option is correct, increment score (silently)
-    if (selectedOption === correctOptionText) {
-        score++;
-    }
-    
-    // Make options non-clickable but don't change their appearance
-    document.querySelectorAll('.option').forEach(option => {
-        option.style.pointerEvents = 'none';
-    });
-    
-    // Hide submit button and show next button
-    submitBtn.style.display = 'none';
-    nextBtn.style.display = 'inline-block';
-}
-
-        function showResults() {
-            quizContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
+        // Handle topic change
+        function handleTopicChange() {
+            const selectedTopic = topicSelectEl.value;
+            const selectedOption = topicSelectEl.options[topicSelectEl.selectedIndex];
             
-            // Store the actual score and show masked version
-            quizScore = score;
-            scoreSpan.textContent = '**';
-
-            // Reset share functionality
-            shareCount = 0;
-            const shareProgressBar = document.getElementById('share-progress-bar');
-            const shareCountText = document.getElementById('share-count-text');
-            const revealScoreBtn = document.getElementById('reveal-score-btn');
-            const telegramShareBtn = document.getElementById('telegram-share-btn');
-            const answersSummary = document.getElementById('answers-summary');
-            const restartBtn = document.getElementById('restart-btn');
-
-            if (shareProgressBar && shareCountText && revealScoreBtn && telegramShareBtn) {
-                shareProgressBar.style.width = '0%';
-                shareCountText.textContent = 'Shares: 0/5';
-                revealScoreBtn.disabled = true;
-                telegramShareBtn.disabled = false;
-                answersSummary.style.display = 'none';
-                restartBtn.style.display = 'none';
+            // Reset upgrade message
+            upgradeMessageEl.style.display = 'none';
+            
+            // Check if selected option is blurred
+            if (selectedOption && selectedOption.classList.contains('blurred-option')) {
+                upgradeMessageEl.textContent = 'Upgrade to Pro to unlock';
+                upgradeMessageEl.style.display = 'block';
+                topicSelectEl.value = ''; // Reset selection
             }
         }
 
-        // Event Listeners
-        startBtn.addEventListener('click', function() {
-            const selectedTopic = topicDropdown.value;
+        // Start the quiz
+        function startQuiz() {
+            const selectedTopic = topicSelectEl.value;
             
             if (!selectedTopic) {
-                alert('Please select a topic');
+                alert('Please select a topic first!');
                 return;
             }
             
-            if (['statistics', 'trigonometry', 'number-theory', 'discrete-math', 'linear-algebra'].includes(selectedTopic)) {
-                proUpgrade.style.display = 'flex';
+            // Load questions for selected topic
+            questions = getRandomQuestions(selectedTopic, 10);
+            
+            if (questions.length === 0) {
+                alert('No questions available for this topic!');
                 return;
             }
+            
+            // Hide topic selection and show quiz
+            topicSelectionEl.style.display = 'none';
+            quizContainerEl.style.display = 'block';
             
             // Reset quiz state
             currentQuestionIndex = 0;
             score = 0;
+            answeredQuestions = 0;
+            totalTimeUsed = 0;
+            startTime = new Date();
             
-            // Get random questions for the selected topic
-            currentQuestions = getRandomQuestions(selectedTopic, 10);
-            
-            // If there are not enough questions, alert the user
-            if (currentQuestions.length < 10) {
-                alert(`Only ${currentQuestions.length} questions available for this topic. Adding more questions to the bank is recommended.`);
+            // Load first question
+            loadQuestion();
+        }
+
+        // Get random questions from the bank
+        function getRandomQuestions(topic, count) {
+            if (!questionsBank[topic] || questionsBank[topic].length === 0) {
+                return [];
             }
             
-            // Hide topic selection and show quiz
-            topicSelection.style.display = 'none';
-            quizContainer.style.display = 'block';
-            resultsContainer.style.display = 'none';
+            const topicQuestions = [...questionsBank[topic]];
+            const selectedQuestions = [];
             
-            // Display first question
-            displayQuestion();
-        });
-
-        submitBtn.addEventListener('click', checkAnswer);
-
-        nextBtn.addEventListener('click', function() {
-            currentQuestionIndex++;
+            // Ensure we don't try to get more questions than are available
+            count = Math.min(count, topicQuestions.length);
             
-            if (currentQuestionIndex < currentQuestions.length) {
-                displayQuestion();
-            } else {
-                showResults();
+            for (let i = 0; i < count; i++) {
+                const randomIndex = Math.floor(Math.random() * topicQuestions.length);
+                selectedQuestions.push(topicQuestions.splice(randomIndex, 1)[0]);
             }
-        });
-
-        restartBtn.addEventListener('click', function() {
-            // Go back to topic selection
-            topicSelection.style.display = 'block';
-            quizContainer.style.display = 'none';
-            resultsContainer.style.display = 'none';
             
-            // Reset dropdown
-            topicDropdown.value = '';
-        });
+            return selectedQuestions;
+        }
 
-        closeProModal.addEventListener('click', function() {
-            proUpgrade.style.display = 'none';
-        });
-
-        // Manage Pro-only options in the dropdown
-        topicDropdown.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const selectedValue = this.value;
-            
-            if (['statistics', 'trigonometry', 'number-theory', 'discrete-math', 'linear-algebra'].includes(selectedValue)) {
-                proUpgrade.style.display = 'flex';
-                this.value = ''; // Reset to default option
+        // Load a question
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endQuiz();
+                return;
             }
-        });
-        function showPopup() {
+            
+            const question = questions[currentQuestionIndex];
+            
+            // Update question counter
+            questionCounterEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            
+            // Load question text
+            questionEl.textContent = question.question;
+            
+            // Clear options and feedback
+            optionsEl.innerHTML = '';
+            feedbackEl.innerHTML = '';
+            feedbackEl.className = 'feedback';
+            
+            // Add options
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                li.textContent = option;
+                li.className = 'option';
+                li.setAttribute('data-index', index);
+                li.addEventListener('click', () => selectAnswer(index));
+                optionsEl.appendChild(li);
+            });
+            
+            // Reset and start timer
+            timeLeft = 60;
+            timerProgressEl.style.width = '100%';
+            clearInterval(timer);
+            startTimer();
+        }
+
+        // Start the timer
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                
+                // Update timer bar
+                const percentage = (timeLeft / 60) * 100;
+                timerProgressEl.style.width = `${percentage}%`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    handleTimeUp();
+                }
+            }, 1000);
+        }
+
+        // Handle time up
+        function handleTimeUp() {
+            // Mark question as timed out
+            feedbackEl.textContent = "Time's up! Moving to next question...";
+            feedbackEl.className = 'feedback incorrect-feedback';
+            
+            // Disable all options
+            const options = document.querySelectorAll('.option');
+            const question = questions[currentQuestionIndex];
+            const correctIndex = question.correctAnswer ?? question.answer;
+            
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+                
+                // Highlight correct answer
+                if (parseInt(option.getAttribute('data-index')) === correctIndex) {
+                    option.classList.add('correct');
+                }
+            });
+            
+            // Record time used
+            totalTimeUsed += 60;
+            answeredQuestions++;
+            
+            // Store answer with correct answer for timed out questions
+            userAnswers.push({
+                question: question.question,
+                userAnswer: "Time's up",
+                correctAnswer: question.options[correctIndex],
+                isCorrect: false
+            });
+            // Move to next question after 2 seconds
+setTimeout(nextQuestion, 2000);
+}
+
+function selectAnswer(index) {
+    clearInterval(timer);
+    
+    const correctIndex = questions[currentQuestionIndex].correctAnswer ?? questions[currentQuestionIndex].answer;
+    const isCorrect = index === correctIndex;
+    
+    // Record time used
+    const timeUsed = 60 - timeLeft;
+    totalTimeUsed += timeUsed;
+    answeredQuestions++;
+    
+    // Store answer with correct answer
+    const question = questions[currentQuestionIndex];
+    userAnswers.push({
+        question: question.question,
+        userAnswer: question.options[index],
+        correctAnswer: question.options[correctIndex],
+        isCorrect: isCorrect
+    });
+    
+    // Update score if correct
+    if (isCorrect) {
+        score++;
+    }
+    
+    // Disable options without highlighting
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => {
+        option.style.pointerEvents = 'none';
+    });
+    
+    // Move to next question after 1 second
+    setTimeout(nextQuestion, 1000);
+}
+
+// Move to next question
+function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+}
+
+// End the quiz
+function endQuiz() {
+    endTime = new Date();
+    const totalTime = (endTime - startTime) / 1000; // in seconds
+    
+    // Hide quiz container and show results
+    quizContainerEl.style.display = 'none';
+    resultsEl.style.display = 'block';
+    
+    // Store actual score and show masked version
+    quizScore = score;
+    scoreEl.textContent = '**';
+    
+    // Reset share functionality
+    shareCount = 0;
+    shareProgressBar.style.width = '0%';
+    shareCountText.textContent = 'Shares: 0/5';
+    revealScoreBtn.disabled = true;
+    telegramShareBtn.disabled = false;
+    answersSummary.style.display = 'none';
+    restartBtn.style.display = 'none';
+    
+    // Update time stats
+    const avgTimePerQuestion = answeredQuestions > 0 ? (totalTimeUsed / answeredQuestions).toFixed(1) : 0;
+    timeStatsEl.textContent = `Total time: ${totalTime.toFixed(1)} seconds
+                              Average time per question: ${avgTimePerQuestion} seconds`;
+}
+
+// Restart the quiz
+function restartQuiz() {
+    // Hide results and show topic selection
+    resultsEl.style.display = 'none';
+    topicSelectionEl.style.display = 'block';
+    
+    // Reset topic selection
+    topicSelectEl.value = '';
+    upgradeMessageEl.style.display = 'none';
+}
+
+// Function to handle share action
+function handleShare() {
+    // Increment share count
+    shareCount++;
+
+    // Update progress bar and text
+    const progressPercentage = (shareCount / 5) * 100;
+    shareProgressBar.style.width = `${progressPercentage}%`;
+    shareCountText.textContent = `Shares: ${shareCount}/5`;
+
+    // Open Telegram share link
+    const telegramShareMessage = encodeURIComponent(
+        "🇬🇲 99% of people can't get a perfect score on this Gambia quiz! " +
+        "Think you know everything about The Gambia? Test your knowledge now and challenge a friend to beat you! 🌍🔥\n\n" +
+        "CLICK THE LINK FOR THE QUIZ 👇 [https://yourquizlink.com]"
+    );
+    window.open(`https://t.me/share/url?url=${telegramShareMessage}`, '_blank');
+
+    // Enable reveal score button if shares reach 5
+    if (shareCount >= 5) {
+        revealScoreBtn.disabled = false;
+        telegramShareBtn.disabled = true;
+    }
+}
+
+// Function to reveal full score
+function revealFullScore() {
+    scoreEl.textContent = `${quizScore}/${questions.length}`;
+    
+    // Show answers summary
+    const correctList = document.getElementById('correct-list');
+    const wrongList = document.getElementById('wrong-list');
+    const correctCount = document.getElementById('correct-count');
+    const wrongCount = document.getElementById('wrong-count');
+    
+    // Clear previous lists
+    correctList.innerHTML = '';
+    wrongList.innerHTML = '';
+    
+    // Count correct and wrong answers
+    let correctCountNum = 0;
+    let wrongCountNum = 0;
+    
+    // Populate lists
+    userAnswers.forEach(answer => {
+        const li = document.createElement('li');
+        if (answer.isCorrect) {
+            li.textContent = `Q: ${answer.question} | Your Answer: ${answer.userAnswer}`;
+            correctList.appendChild(li);
+            correctCountNum++;
+        } else {
+            li.textContent = `Q: ${answer.question} | Your Answer: ${answer.userAnswer} | Correct Answer: ${answer.correctAnswer}`;
+            wrongList.appendChild(li);
+            wrongCountNum++;
+        }
+    });
+    
+    // Update counts
+    correctCount.textContent = correctCountNum;
+    wrongCount.textContent = wrongCountNum;
+    
+    // Show summary and restart button
+    answersSummary.style.display = 'block';
+    restartBtn.style.display = 'inline-block';
+    
+    alert(`Congratulations! Your full score is ${quizScore}/${questions.length}. Great job completing the Gambia quiz!`);
+    revealScoreBtn.disabled = true;
+}
+
+// Add popup functionality
+function showPopup() {
     let popup = document.getElementById("popupAd");
     let countdown = document.getElementById("countdown");
     let timeLeft = 35;
-    popup.style.display = "flex"; // Changed to flex for better centering
+    popup.style.display = "flex";
     
     let timer = setInterval(() => {
         timeLeft--;
@@ -903,119 +1049,13 @@
 }
 
 function closePopup(event) {
-    event.preventDefault(); // Prevent default link behavior
-    event.stopPropagation(); // Stop event from bubbling
+    event.preventDefault();
+    event.stopPropagation();
     document.getElementById("popupAd").style.display = "none";
 }
 
-// Close button event listener
-document.querySelector('.close-button').addEventListener('click', closePopup);
-
-// Show pop-up every 55 seconds
-setInterval(showPopup, 55000);
-        
-        // Global variables for share functionality
-        let quizScore = 0; // Renamed to avoid conflict with 'score'
-        let shareCount = 0;
-
-        // Social Share Functionality
-        const telegramShareBtn = document.getElementById('telegram-share-btn');
-        const revealScoreBtn = document.getElementById('reveal-score-btn');
-        const shareProgressBar = document.getElementById('share-progress-bar');
-        const shareCountText = document.getElementById('share-count-text');
-
-        // Function to handle share action
-        function handleShare() {
-            // Increment share count
-            shareCount++;
-
-            // Update progress bar and text
-            const progressPercentage = (shareCount / 5) * 100;
-            shareProgressBar.style.width = `${progressPercentage}%`;
-            shareCountText.textContent = `Shares: ${shareCount}/5`;
-
-            // Open Telegram share link
-            const telegramShareMessage = encodeURIComponent(
-                "➗✨ 99% of people can't get a perfect score on this Math quiz! " +
-                "Think you're in the top 1%? Test your knowledge now and challenge a friend to beat you! 🚀🔥\n\n" +
-                "CLICK THE LINK FOR THE QUIZ 👇 [https://yourquizlink.com]"
-            );
-            window.open(`https://t.me/share/url?url=${telegramShareMessage}`, '_blank');
-
-            // Enable reveal score button if shares reach 5
-            if (shareCount >= 5) {
-                revealScoreBtn.disabled = false;
-                telegramShareBtn.disabled = true;
-            }
-        }
-
-        // Function to reveal full score
-        function revealFullScore() {
-            scoreSpan.textContent = quizScore;
-            
-            // Show answers summary
-            const answersSummary = document.getElementById('answers-summary');
-            const correctList = document.getElementById('correct-list');
-            const wrongList = document.getElementById('wrong-list');
-            const correctCount = document.getElementById('correct-count');
-            const wrongCount = document.getElementById('wrong-count');
-            
-            // Clear previous lists
-            correctList.innerHTML = '';
-            wrongList.innerHTML = '';
-            
-            // Count correct and wrong answers
-            let correctCountNum = 0;
-            let wrongCountNum = 0;
-            
-            // Populate lists
-            userAnswers.forEach(answer => {
-                const li = document.createElement('li');
-                li.textContent = `Q: ${answer.question} | Your Answer: ${answer.userAnswer} | Correct Answer: ${answer.correctAnswer}`;
-                
-                if (answer.isCorrect) {
-                    correctList.appendChild(li);
-                    correctCountNum++;
-                } else {
-                    wrongList.appendChild(li);
-                    wrongCountNum++;
-                }
-            });
-            
-            // Update counts
-            correctCount.textContent = correctCountNum;
-            wrongCount.textContent = wrongCountNum;
-            
-            // Show summary and restart button
-            answersSummary.style.display = 'block';
-            document.getElementById('restart-btn').style.display = 'inline-block';
-            
-            alert(`Congratulations! Your full score is ${quizScore}/10. Great job completing the mathematics quiz!`);
-            revealScoreBtn.disabled = true;
-        }
-
-        // Add event listeners for share functionality
-        if (telegramShareBtn && revealScoreBtn) {
-            telegramShareBtn.addEventListener('click', handleShare);
-            revealScoreBtn.addEventListener('click', revealFullScore);
-        }
-
-        // Initialize popup functionality
-        function showPopup() {
-            let popup = document.getElementById("popupAd");
-            let countdown = document.getElementById("countdown");
-            let timeLeft = 35;
-            popup.style.display = "flex"; // Changed to flex for better centering
-            
-            let timer = setInterval(() => {
-                timeLeft--;
-                countdown.innerText = `Closing in ${timeLeft}s`;
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    popup.style.display = "none";
-                }
-            }, 1000);
-        }
-    </script>
+// Initialize the app
+document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
