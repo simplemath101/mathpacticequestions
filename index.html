@@ -469,233 +469,240 @@
 
     <script>
         // DOM elements
-        const topicSelectionEl = document.getElementById('topicSelection');
-        const topicSelectEl = document.getElementById('topic');
-        const startBtn = document.getElementById('startBtn');
-        const upgradeMessageEl = document.getElementById('upgradeMessage');
-        const quizContainerEl = document.getElementById('quizContainer');
-        const questionCounterEl = document.getElementById('questionCounter');
-        const questionEl = document.getElementById('question');
-        const optionsEl = document.getElementById('options');
-        const feedbackEl = document.getElementById('feedback');
-        const timerProgressEl = document.getElementById('timerProgress');
-        const resultsEl = document.getElementById('results');
-        const scoreEl = document.getElementById('score');
-        const timeStatsEl = document.getElementById('timeStats');
-        const restartBtn = document.getElementById('restartBtn');
+const topicSelectionEl = document.getElementById('topicSelection');
+const topicSelectEl = document.getElementById('topic');
+const startBtn = document.getElementById('startBtn');
+const upgradeMessageEl = document.getElementById('upgradeMessage');
+const quizContainerEl = document.getElementById('quizContainer');
+const questionCounterEl = document.getElementById('questionCounter');
+const questionEl = document.getElementById('question');
+const optionsEl = document.getElementById('options');
+const feedbackEl = document.getElementById('feedback');
+const timerProgressEl = document.getElementById('timerProgress');
+const resultsEl = document.getElementById('results');
+const scoreEl = document.getElementById('score');
+const timeStatsEl = document.getElementById('timeStats');
+const restartBtn = document.getElementById('restartBtn');
 
-        // Quiz state
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let timer;
-        let timeLeft = 60;
-        let questions = [];
-        let startTime, endTime;
-        let answeredQuestions = 0;
-        let totalTimeUsed = 0;
-        let userAnswers = [];
-        let quizScore = 0;
-        let shareCount = 0;
+// Quiz state
+let currentQuestionIndex = 0;
+let score = 0;
+let timer;
+let timeLeft = 60;
+let questions = [];
+let startTime, endTime;
+let answeredQuestions = 0;
+let totalTimeUsed = 0;
+let userAnswers = [];
+let quizScore = 0;
+let shareCount = 0;
+let popupTimer; // Added variable to track popup timer
 
-        // Additional DOM elements for new functionality
-        const telegramShareBtn = document.getElementById('telegram-share-btn');
-        const revealScoreBtn = document.getElementById('reveal-score-btn');
-        const shareProgressBar = document.getElementById('share-progress-bar');
-        const shareCountText = document.getElementById('share-count-text');
-        const answersSummary = document.getElementById('answers-summary');
+// Additional DOM elements for new functionality
+const telegramShareBtn = document.getElementById('telegram-share-btn');
+const revealScoreBtn = document.getElementById('reveal-score-btn');
+const shareProgressBar = document.getElementById('share-progress-bar');
+const shareCountText = document.getElementById('share-count-text');
+const answersSummary = document.getElementById('answers-summary');
 
-        // Questions bank
-        const questionsBank = {
-            history: [
-                {
-                    question: "In what year did The Gambia gain independence from British colonial rule?",
-                    options: ["1965", "1975", "1960", "1970"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Who was the first president of The Gambia?",
-                    options: ["Dawda Jawara", "Yahya Jammeh", "Adama Barrow", "Bakary Dabo"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What was the name of the political union between Senegal and The Gambia that existed from 1982 to 1989?",
-                    options: ["Senegambia Confederation", "Gambia-Senegal Alliance", "West African Union", "Senegambia Republic"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which former Gambian president came to power through a military coup in 1994?",
-                    options: ["Yahya Jammeh", "Dawda Jawara", "Adama Barrow", "Ousainou Darboe"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What was the former name of Banjul, the capital city of The Gambia?",
-                    options: ["Bathurst", "Georgetown", "St. Mary's", "Albion"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which European explorer is credited with 'discovering' the Gambia River in the 15th century?",
-                    options: ["Prince Henry the Navigator", "Christopher Columbus", "Vasco da Gama", "Ferdinand Magellan"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which slave fort is located at the mouth of the Gambia River and played a significant role in the Atlantic slave trade?",
-                    options: ["James Island (Kunta Kinteh Island)", "Goree Island", "Cape Coast Castle", "Elmina Castle"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "In what year did Adama Barrow become president of The Gambia?",
-                    options: ["2017", "2015", "2019", "2012"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "The Gambia River has been an important trading route for centuries. Which product was NOT historically traded along this river?",
-                    options: ["Coffee", "Gold", "Ivory", "Slaves"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which military and political alliance helped ensure peaceful transition of power after the 2016 Gambian election crisis?",
-                    options: ["ECOWAS", "African Union", "United Nations", "Commonwealth"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What famous American author wrote 'Roots', tracing his ancestry to The Gambia?",
-                    options: ["Alex Haley", "James Baldwin", "Toni Morrison", "Maya Angelou"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which colonial power briefly controlled parts of The Gambia before British dominance?",
-                    options: ["Portugal", "France", "Netherlands", "Spain"],
-                    correctAnswer: 0
-                }
-            ],
-            culture: [
-                {
-                    question: "What is the dominant religion in The Gambia?",
-                    options: ["Islam", "Christianity", "Traditional African Religions", "Buddhism"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which of these is a traditional Gambian musical instrument?",
-                    options: ["Kora", "Sitar", "Accordion", "Bagpipes"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the name of the traditional Gambian wrestling that combines wrestling with mystical rituals?",
-                    options: ["Boreh", "Lutte", "Mma", "Capoeira"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which ethnic group is the largest in The Gambia?",
-                    options: ["Mandinka", "Fula", "Wolof", "Jola"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What colorful outfit is typically worn by Gambian women?",
-                    options: ["Complet", "Sari", "Kimono", "Dirndl"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which of these is a traditional Gambian ceremonial dance?",
-                    options: ["Kankurang", "Samba", "Tango", "Hula"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the traditional greeting in Mandinka?",
-                    options: ["I be jama?", "Jambo", "Salaam", "Hola"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which traditional Gambian practice involves female storytellers who preserve oral history?",
-                    options: ["Griots", "Sangomas", "Oracles", "Nyakures"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is a common traditional musical genre in The Gambia?",
-                    options: ["Mbalax", "Reggae", "Samba", "K-Pop"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which traditional craft is The Gambia particularly known for?",
-                    options: ["Tie-dye textiles", "Pottery", "Glassblowing", "Metalwork"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is 'attaya', an important social ritual in Gambian culture?",
-                    options: ["Tea ceremony", "Wedding dance", "Harvest festival", "New year celebration"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which famous Gambian musician gained international recognition for his kora playing?",
-                    options: ["Jaliba Kuyateh", "Youssou N'Dour", "Alpha Blondy", "Baaba Maal"],
-                    correctAnswer: 0
-                }
-            ],
-            geography: [
-                {
-                    question: "What is the capital city of The Gambia?",
-                    options: ["Banjul", "Serekunda", "Brikama", "Bakau"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which country completely surrounds The Gambia except for its coastline?",
-                    options: ["Senegal", "Mali", "Guinea-Bissau", "Sierra Leone"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the length of The Gambia from east to west?",
-                    options: ["About 400 km", "About 600 km", "About 200 km", "About 800 km"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which body of water borders The Gambia to the west?",
-                    options: ["Atlantic Ocean", "Mediterranean Sea", "Indian Ocean", "Lake Volta"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the main river that runs through The Gambia?",
-                    options: ["Gambia River", "Senegal River", "Niger River", "Volta River"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which of these is NOT one of the administrative divisions of The Gambia?",
-                    options: ["Tambacounda", "North Bank", "West Coast", "Central River"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the approximate population of The Gambia as of 2023?",
-                    options: ["2.5 million", "10 million", "5 million", "800,000"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which of these is a popular tourist beach area in The Gambia?",
-                    options: ["Kotu", "Dakar", "Accra", "Monrovia"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the highest point in The Gambia?",
-                    options: ["Red Rock (53m)", "Mount Gambia (150m)", "Banjul Peak (90m)", "Senegal Hill (200m)"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Which of these is a UNESCO World Heritage site in The Gambia?",
-                    options: ["Kunta Kinteh Island", "Banjul Cathedral", "National Museum", "Abuko Nature Reserve"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the most widely spoken indigenous language in The Gambia?",
-                    options: ["Mandinka", "Wolof", "Fula", "Jola"],
-                    correctAnswer: 0
-                },
-                {
-                    question: "What is the climate type of The Gambia?",
-                    options: ["Tropical savanna", "Mediterranean", "Desert", "Humid subtropical"],
-                    correctAnswer: 0
-                }
-            ]
-        };
+// Questions bank
+const questionsBank = {
+    history: [
+        {
+            question: "In what year did The Gambia gain independence from British colonial rule?",
+            options: ["1965", "1975", "1960", "1970"],
+            correctAnswer: 0
+        },
+        {
+            question: "Who was the first president of The Gambia?",
+            options: ["Dawda Jawara", "Yahya Jammeh", "Adama Barrow", "Bakary Dabo"],
+            correctAnswer: 0
+        },
+        {
+            question: "What was the name of the political union between Senegal and The Gambia that existed from 1982 to 1989?",
+            options: ["Senegambia Confederation", "Gambia-Senegal Alliance", "West African Union", "Senegambia Republic"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which former Gambian president came to power through a military coup in 1994?",
+            options: ["Yahya Jammeh", "Dawda Jawara", "Adama Barrow", "Ousainou Darboe"],
+            correctAnswer: 0
+        },
+        {
+            question: "What was the former name of Banjul, the capital city of The Gambia?",
+            options: ["Bathurst", "Georgetown", "St. Mary's", "Albion"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which European explorer is credited with 'discovering' the Gambia River in the 15th century?",
+            options: ["Prince Henry the Navigator", "Christopher Columbus", "Vasco da Gama", "Ferdinand Magellan"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which slave fort is located at the mouth of the Gambia River and played a significant role in the Atlantic slave trade?",
+            options: ["James Island (Kunta Kinteh Island)", "Goree Island", "Cape Coast Castle", "Elmina Castle"],
+            correctAnswer: 0
+        },
+        {
+            question: "In what year did Adama Barrow become president of The Gambia?",
+            options: ["2017", "2015", "2019", "2012"],
+            correctAnswer: 0
+        },
+        {
+            question: "The Gambia River has been an important trading route for centuries. Which product was NOT historically traded along this river?",
+            options: ["Coffee", "Gold", "Ivory", "Slaves"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which military and political alliance helped ensure peaceful transition of power after the 2016 Gambian election crisis?",
+            options: ["ECOWAS", "African Union", "United Nations", "Commonwealth"],
+            correctAnswer: 0
+        },
+        {
+            question: "What famous American author wrote 'Roots', tracing his ancestry to The Gambia?",
+            options: ["Alex Haley", "James Baldwin", "Toni Morrison", "Maya Angelou"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which colonial power briefly controlled parts of The Gambia before British dominance?",
+            options: ["Portugal", "France", "Netherlands", "Spain"],
+            correctAnswer: 0
+        }
+    ],
+    culture: [
+        {
+            question: "What is the dominant religion in The Gambia?",
+            options: ["Islam", "Christianity", "Traditional African Religions", "Buddhism"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which of these is a traditional Gambian musical instrument?",
+            options: ["Kora", "Sitar", "Accordion", "Bagpipes"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the name of the traditional Gambian wrestling that combines wrestling with mystical rituals?",
+            options: ["Boreh", "Lutte", "Mma", "Capoeira"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which ethnic group is the largest in The Gambia?",
+            options: ["Mandinka", "Fula", "Wolof", "Jola"],
+            correctAnswer: 0
+        },
+        {
+            question: "What colorful outfit is typically worn by Gambian women?",
+            options: ["Complet", "Sari", "Kimono", "Dirndl"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which of these is a traditional Gambian ceremonial dance?",
+            options: ["Kankurang", "Samba", "Tango", "Hula"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the traditional greeting in Mandinka?",
+            options: ["I be jama?", "Jambo", "Salaam", "Hola"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which traditional Gambian practice involves female storytellers who preserve oral history?",
+            options: ["Griots", "Sangomas", "Oracles", "Nyakures"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is a common traditional musical genre in The Gambia?",
+            options: ["Mbalax", "Reggae", "Samba", "K-Pop"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which traditional craft is The Gambia particularly known for?",
+            options: ["Tie-dye textiles", "Pottery", "Glassblowing", "Metalwork"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is 'attaya', an important social ritual in Gambian culture?",
+            options: ["Tea ceremony", "Wedding dance", "Harvest festival", "New year celebration"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which famous Gambian musician gained international recognition for his kora playing?",
+            options: ["Jaliba Kuyateh", "Youssou N'Dour", "Alpha Blondy", "Baaba Maal"],
+            correctAnswer: 0
+        }
+    ],
+    geography: [
+        {
+            question: "What is the capital city of The Gambia?",
+            options: ["Banjul", "Serekunda", "Brikama", "Bakau"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which country completely surrounds The Gambia except for its coastline?",
+            options: ["Senegal", "Mali", "Guinea-Bissau", "Sierra Leone"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the length of The Gambia from east to west?",
+            options: ["About 400 km", "About 600 km", "About 200 km", "About 800 km"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which body of water borders The Gambia to the west?",
+            options: ["Atlantic Ocean", "Mediterranean Sea", "Indian Ocean", "Lake Volta"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the main river that runs through The Gambia?",
+            options: ["Gambia River", "Senegal River", "Niger River", "Volta River"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which of these is NOT one of the administrative divisions of The Gambia?",
+            options: ["Tambacounda", "North Bank", "West Coast", "Central River"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the approximate population of The Gambia as of 2023?",
+            options: ["2.5 million", "10 million", "5 million", "800,000"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which of these is a popular tourist beach area in The Gambia?",
+            options: ["Kotu", "Dakar", "Accra", "Monrovia"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the highest point in The Gambia?",
+            options: ["Red Rock (53m)", "Mount Gambia (150m)", "Banjul Peak (90m)", "Senegal Hill (200m)"],
+            correctAnswer: 0
+        },
+        {
+            question: "Which of these is a UNESCO World Heritage site in The Gambia?",
+            options: ["Kunta Kinteh Island", "Banjul Cathedral", "National Museum", "Abuko Nature Reserve"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the most widely spoken indigenous language in The Gambia?",
+            options: ["Mandinka", "Wolof", "Fula", "Jola"],
+            correctAnswer: 0
+        },
+        {
+            question: "What is the climate type of The Gambia?",
+            options: ["Tropical savanna", "Mediterranean", "Desert", "Humid subtropical"],
+            correctAnswer: 0
+        }
+    ]
+};
 
-        // Initialize the quiz
+// Initialize the quiz
 function init() {
+    // Hide popup initially
+    const popup = document.getElementById("popupAd");
+    if (popup) {
+        popup.style.display = "none";
+    }
+    
     // Event listeners
     startBtn.addEventListener('click', startQuiz);
     restartBtn.addEventListener('click', restartQuiz);
@@ -720,10 +727,17 @@ function init() {
     }
     
     // Add popup event listeners
-    document.querySelector('.close-button').addEventListener('click', closePopup);
+    const closeButton = document.querySelector('.close-button');
+    if (closeButton) {
+        closeButton.addEventListener('click', closePopup);
+    }
     
-    // Show pop-up every 55 seconds
-    setInterval(showPopup, 55000);
+    // Start popup timer - wait 55 seconds before first popup
+    popupTimer = setTimeout(() => {
+        showPopup();
+        // Then show every 55 seconds after the first one
+        setInterval(showPopup, 55000);
+    }, 55000);
 }
 
 // Handle topic change
@@ -1036,22 +1050,33 @@ function showPopup() {
     let popup = document.getElementById("popupAd");
     let countdown = document.getElementById("countdown");
     let timeLeft = 35;
-    popup.style.display = "flex";
     
-    let timer = setInterval(() => {
-        timeLeft--;
-        countdown.innerText = `Closing in ${timeLeft}s`;
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            popup.style.display = "none";
-        }
-    }, 1000);
+    if (popup) {
+        popup.style.display = "flex";
+        
+        let timer = setInterval(() => {
+            timeLeft--;
+            if (countdown) {
+                countdown.innerText = `Closing in ${timeLeft}s`;
+            }
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                popup.style.display = "none";
+            }
+        }, 1000);
+    }
 }
 
 function closePopup(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById("popupAd").style.display = "none";
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    const popup = document.getElementById("popupAd");
+    if (popup) {
+        popup.style.display = "none";
+    }
 }
 
 // Initialize the app
